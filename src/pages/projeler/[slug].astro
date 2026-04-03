@@ -59,7 +59,11 @@ const formattedDate = new Date(project.data.date).toLocaleDateString('tr-TR', { 
     {/* ICERIK KISMI (Geniş Okuma Alanı) */}
     <div class="project-content container">
       <div class="markdown-body">
-        <Content />
+        {project.body && project.body.trim().length > 0 ? (
+          <Content />
+        ) : (
+          <p>{project.data.description}</p>
+        )}
       </div>
       
       <div class="project-back">
