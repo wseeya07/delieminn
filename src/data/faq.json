@@ -22,5 +22,13 @@
   {
     "question": "Yapılan işlerin sonuçlarını görebilir miyim?",
     "answer": "YouTube kanalımızda neredeyse her işimizi dyno verileriyle paylaşıyoruz. Before/after sonuçları, AFR grafikleri, hız testleri — hepsi orada."
+  },
+  {
+    "question": "Neden ECU Yazılımına (Remap) İhtiyacım Var?",
+    "answer": "Üreticiler motosikletleri fabrikadan çıkarırken performanstan ziyade katı emisyon (egzoz) kurallarını geçmeye odaklanır. Ateşleme, yakıt haritası ve gaz kelebeği limitleri emisyon için kısılır. Biz yazılım atarak bu önceliği değiştirip performansı öne alıyoruz. Özellikle de araca açık egzoz taktıysanız, stok beyin hala orijinal egzoz varmış gibi davranır. O taktığınız yeni egzozun potansiyel gücünü, ancak ECU'yu o yeni hava akışına uyumlu hale getirdiğimizde tam anlamıyla hissedebilirsiniz."
+  },
+  {
+    "question": "Dyno motorun gücünü artırır mı?",
+    "answer": "Dyno aleti kendi başına motorunuza beygir (%HP) basmaz; motorunuzun tam olarak ne kadar güç ürettiğini tekerlek üzerinden okuyan devasa bir ölçüm ve teşhis aletidir. Motorun verebileceği maksimum güç, motorun içine ne kadar hava çekebildiğiyle sınırlıdır. Eğer siz motora performans modifikasyonları yaptıysanız (hava filtresi, egzoz vs.), motora daha fazla hava girer ancak 'stok' beyin bu fazla havayı doğru yakıtla işleyemez. Biz dyno üzerinde tam yüklü testler ve AFR okumaları yaparak, motorun yazılımını (haritasını) mevcut modifikasyonlarınıza göre senkronize ederiz. Tuning (yazılım) ile motorun potansiyelindeki tüm gücü en sağlıklı haliyle dışarı çıkarırız."
   }
 ]
