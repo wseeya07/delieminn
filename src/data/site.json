@@ -20,6 +20,7 @@
     "paragraphs": [
       "Bizim için her motosiklet kendi içinde farklı bir denklemdir. Dyno'da veri okumaktan tutun da mekanik arızaları çözmeye, detaylı ekspertiz yapmaktan ECU yazılımına kadar tüm süreçleri büyük bir merak ve özenle ele alıyoruz.",
       "Yılların getirdiği tecrübeyle yetinmiyor, XMAX, Peugeot XP400, Zontes gibi modellerde sürekli yeni çözümler arıyoruz. 'Her şeyi en iyi biz yaparız' gibi bir iddiamız yok; ancak aldığımız her işi en dürüst, en temiz ve teknik verilere dayalı şekilde yapmak temel vizyonumuz.",
+      "Sektöre sadece kendi atölyemizden değil, kurumsal boyutta da ön ayak oluyoruz. Türkiye'deki birçok motosiklet modelinin geliştirme ve optimizasyon süreçlerini bizzat distribütörler ve üretici destekleriyle, özel yetki protokolleri çerçevesinde yürütüyoruz.",
       "Atölyemizde yapılan her işi, iyi kötü demeden şeffaf bir şekilde YouTube kanalımızda paylaşıyoruz. Dyno ölçümleri, mekanik incelemeler ve gerçek kullanıcı deneyimleri... Çünkü söylediğimiz her şeyin arkasında ölçülebilir bir veri olmasına inanıyoruz."
     ]
   },
@@ -45,8 +46,8 @@
   "achievements": [
     { "icon": "🇹🇷", "title": "Türkiye'de İlk", "description": "XMAX Stok ECU Yazılımı" },
     { "icon": "🌍", "title": "Dünyada Tek", "description": "Peugeot XP400 ECU Yazılımı" },
-    { "icon": "📊", "title": "Dyno Verileriyle", "description": "Kanıtlanmış Sonuçlar" },
-    { "icon": "🎥", "title": "YouTube'da Şeffaf", "description": "Her İş Belgeleniyor" }
+    { "icon": "🤝", "title": "Resmi İşbirlikleri", "description": "Distribütör ve Üretici Desteği" },
+    { "icon": "📊", "title": "Veri Odaklı", "description": "Kanıtlanmış Dyno Sonuçları" }
   ],
   "expertise": [
     { "icon": "💻", "title": "ECU Remap & Chip Tuning", "description": "Stok ve aftermarket ECU yazılımları. Boot modunda chip tuning dahil. XMAX, Vespa, PCX, Zontes ve daha fazlası." },
