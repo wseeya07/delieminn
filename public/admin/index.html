@@ -42,10 +42,14 @@
     /* PROJECT LIST */
     .projects-list { margin-top: 2rem; border-top: 1px solid #222; padding-top: 1.5rem; }
     .projects-list h3 { font-size: 1rem; color: #888; margin-bottom: 1rem; }
-    .project-item { background: #141416; border: 1px solid #222; border-radius: 8px; padding: 1rem; margin-bottom: 0.8rem; }
+    .project-item { background: #141416; border: 1px solid #222; border-radius: 8px; padding: 1rem; margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: space-between; }
+    .project-item__info { flex: 1; }
     .project-item__title { font-weight: 600; margin-bottom: 0.3rem; }
     .project-item__meta { font-size: 0.8rem; color: #888; }
+    .project-item__delete { background: none; border: 1px solid #333; color: #888; padding: 0.3rem 0.7rem; border-radius: 6px; cursor: pointer; font-size: 0.75rem; transition: all 0.2s; flex-shrink: 0; margin-left: 1rem; }
+    .project-item__delete:hover { border-color: #e63946; color: #e63946; }
     .loading { text-align: center; padding: 2rem; color: #888; }
+    .field input[type='date'] { color-scheme: dark; }
   </style>
 </head>
 <body>
@@ -104,6 +108,10 @@
       <div class="field">
         <label>Marka / Model</label>
         <input type="text" id="projBrand" placeholder="Örn: Yamaha XMAX 300" />
+      </div>
+      <div class="field">
+        <label>Tarih</label>
+        <input type="date" id="projDate" />
       </div>
       <button class="btn" type="submit" id="submitBtn">Projeyi Yayınla</button>
       <div class="error" id="formError"></div>
@@ -177,8 +185,11 @@
 
         container.innerHTML = projects.map(p => `
           <div class="project-item">
-            <div class="project-item__title">${p.title}</div>
-            <div class="project-item__meta">${p.category || ''} ${p.brand ? '· ' + p.brand : ''}</div>
+            <div class="project-item__info">
+              <div class="project-item__title">${p.title}</div>
+              <div class="project-item__meta">${p.date || ''} · ${p.category || ''} ${p.brand ? '· ' + p.brand : ''}</div>
+            </div>
+            <button class="project-item__delete" onclick="deleteProject('${p.filename}', '${p.sha}')" title="Sil">🗑 Sil</button>
           </div>
         `).join('');
       } catch {
@@ -200,7 +211,8 @@
         description: document.getElementById('projDesc').value,
         videoUrl: document.getElementById('projVideo').value || '',
         category: document.getElementById('projCategory').value,
-        brand: document.getElementById('projBrand').value || ''
+        brand: document.getElementById('projBrand').value || '',
+        date: document.getElementById('projDate').value || ''
       };
 
       try {
@@ -227,6 +239,28 @@
         btn.disabled = false; btn.textContent = 'Projeyi Yayınla';
       }
     });
+
+    // DELETE PROJECT
+    async function deleteProject(filename, sha) {
+      if (!confirm(`"${filename}" projesini silmek istediğine emin misin?`)) return;
+      try {
+        const res = await fetch(`${API}/projects`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+          },
+          body: JSON.stringify({ filename, sha })
+        });
+        if (!res.ok) throw new Error('Silinemedi');
+        loadProjects();
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+
+    // Set default date to today
+    document.getElementById('projDate').valueAsDate = new Date();
 
     // AUTO-LOGIN CHECK
     if (sessionStorage.getItem('token')) showDashboard();
