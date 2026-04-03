@@ -7,7 +7,7 @@ const projects = defineCollection({
   schema: z.object({
     title: z.string(),
     date: z.coerce.date(),
-    description: z.string(),
+    description: z.string().optional(),
     videoUrl: z.string().optional(),
     category: z.enum(['ECU Remap', 'Dyno Test', 'CVT', 'Motor Revizyon', 'Modifiye', 'Bakım', 'Arıza Çözüm']).default('Modifiye'),
     brand: z.string().optional(),
