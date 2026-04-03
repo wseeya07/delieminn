@@ -8,6 +8,8 @@ import SectionHeader from '../../components/ui/SectionHeader.astro';
 const allProjects = await getCollection('projects');
 const sorted = allProjects.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
+
+
 function extractYouTubeId(url) {
   if (!url) return null;
   const match = url.match(/(?:youtu\.be\/|v=|\/embed\/)([a-zA-Z0-9_-]{11})/);
@@ -55,7 +57,8 @@ function extractYouTubeId(url) {
                     <span class="project-row__date">{formattedDate}</span>
                   </div>
                   <h2 class="project-row__title">{project.data.title}</h2>
-                  <p class="project-row__desc">{project.data.description}</p>
+                  <div class="project-row__desc" set:html={project.rendered?.html || project.data.description}>
+                  </div>
                 </div>
               </article>
             );
@@ -174,6 +177,32 @@ function extractYouTubeId(url) {
     line-height: 1.7;
     font-size: var(--text-body);
     margin-bottom: 0;
+  }
+  .project-row__desc p {
+    margin-bottom: 1rem;
+  }
+  .project-row__desc img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    margin: 1rem 0;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  }
+  .project-row__desc ul, .project-row__desc ol {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+  }
+  .project-row__desc li {
+    margin-bottom: 0.3rem;
+  }
+  .project-row__desc h2, .project-row__desc h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.8rem;
+    color: var(--color-white);
+  }
+  .project-row__desc a {
+    color: var(--color-accent);
+    text-decoration: underline;
   }
 
   .projects-empty {

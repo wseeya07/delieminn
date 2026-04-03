@@ -77,11 +77,11 @@ export async function onRequestPost(context) {
 
   const projDate = date || new Date().toISOString().split('T')[0];
 
-  let md = `---\ntitle: "${title.replace(/"/g, '\\"')}"\ndate: ${projDate}\ndescription: "${description.replace(/"/g, '\\"')}"`;
+  let md = `---\ntitle: "${title.replace(/"/g, '\\"')}"\ndate: ${projDate}`;
   if (videoUrl) md += `\nvideoUrl: "${videoUrl}"`;
   md += `\ncategory: "${category || 'Modifiye'}"`;
   if (brand) md += `\nbrand: "${brand}"`;
-  md += `\n---\n`;
+  md += `\n---\n\n${description}`;
 
   try {
     const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${PATH}/${slug}.md`, {

@@ -1,0 +1,101 @@
+---
+import SectionHeader from './ui/SectionHeader.astro';
+---
+
+<section class="section technical-info" id="bilgi">
+  <div class="container">
+    <SectionHeader label="İşin Mutfağı">Performansın Sırrı</SectionHeader>
+
+    <div class="info-grid">
+      <div class="info-card reveal">
+        <div class="info-card__icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="info-card__title">ECU Yazılımı (Flashing) Nedir?</h3>
+        <p class="info-card__text">
+          Basitçe; motosikletin beynine, mevcut modifikasyonlarınıza daha uygun yeni bir harita (tune) yükleme işlemidir. <br><br>
+          Örneğin, yeni bir egzoz taktınız. Orijinal fabrika yazılımı, <strong>emisyon testlerini geçmek</strong> için tamamen stok bir egzoza göre tasarlanmıştır. Ateşleme, yakıt haritası ve gaz tepkileri performanstan ziyade kurallar çerçevesinde kısılmıştır. <br><br>
+          Yeni egzozunuz veya donanımınız gücü artıracak potansiyele sahip olsa bile, ECU bu yeni devinime göre <strong>yeniden kalibre edilmeden</strong> potansiyel gücünüze asla ulaşamazsınız. Yazılım ile emisyon kısıtlamalarını esnetip, tamamen motorunuzun performansını öne alıyoruz.
+        </p>
+      </div>
+
+      <div class="info-card reveal" style="animation-delay: 0.2s">
+        <div class="info-card__icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 20V10M18 20V4M6 20v-4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="info-card__title">Dyno Gerçekten Beygir Üretir mi?</h3>
+        <p class="info-card__text">
+          <strong>Hayır, dyno hp (beygir) üretmez!</strong> Beygiri motorunuz üretir, dyno ise tekerlek üzerindeki net aktarımı saniyesi saniyesine hassas şekilde okur. <br><br>
+          Gücün asıl temeli motora giren <strong>hava ve yakıttır</strong>. Donanımlar hava akışınızı iyileştirebilir ama stok yazılım bu ekstra akışı okuyup doğru yakıtla eşleştiremez.<br><br>
+          Bizim dyno üzerinde yaptığımız işlem; motorunuzu tam yüke bindirerek <strong>AFR (hava/yakıt) oranını</strong> saptamak ve hava akışınıza cuk oturan haritayı yazmaktır. Dyno size havadan beygir vermez; artmış hava akışından alabileceğiniz <strong>%100 maksimum verimi</strong> kusursuzca yere aktarmanızı sağlar.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .technical-info {
+    position: relative;
+    background: var(--color-bg-primary);
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl);
+  }
+
+  .info-card {
+    background: var(--color-bg-card);
+    padding: var(--space-2xl);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: var(--radius-lg);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .info-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 2px;
+    background: linear-gradient(90deg, var(--color-accent), transparent);
+    opacity: 0.5;
+  }
+
+  .info-card__icon {
+    width: 60px; height: 60px;
+    background: rgba(230,57,70,0.1);
+    border: 1px solid rgba(230,57,70,0.2);
+    border-radius: var(--radius-md);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--color-accent);
+    margin-bottom: var(--space-xl);
+  }
+
+  .info-card__title {
+    font-size: var(--text-h3);
+    margin-bottom: var(--space-md);
+    color: var(--color-white);
+  }
+
+  .info-card__text {
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+    font-size: var(--text-body);
+  }
+
+  .info-card__text strong {
+    color: var(--color-white);
+    font-weight: 500;
+  }
+
+  @media (max-width: 900px) {
+    .info-grid { grid-template-columns: 1fr; gap: var(--space-xl); }
+    .info-card { padding: var(--space-xl); }
+  }
+</style>
