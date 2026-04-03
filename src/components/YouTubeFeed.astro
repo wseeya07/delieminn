@@ -1,113 +1,132 @@
 ---
-import site from '../data/site.json';
 import SectionHeader from './ui/SectionHeader.astro';
-const videos = site.youtubeVideos;
 ---
 <section class="section" id="youtube">
   <div class="container">
-    <SectionHeader label="YouTube">Son Videolar</SectionHeader>
-    <div class="yt__grid reveal-stagger">
-      {videos.map((v) => (
-        <a
-          href={`https://youtube.com/watch?v=${v.id}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="yt__card"
-        >
-          <div class="yt__thumb">
-            <img
-              src={`https://img.youtube.com/vi/${v.id}/mqdefault.jpg`}
-              alt={v.title}
-              loading="lazy"
-            />
-            <div class="yt__play">
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M8 5v14l11-7z"/>
-              </svg>
-            </div>
-          </div>
-          <p class="yt__title">{v.title}</p>
-        </a>
-      ))}
+    <SectionHeader label="YouTube">Son Videolarımız</SectionHeader>
+    <div class="yt-grid" id="ytGrid">
+      <div class="yt-loading">Videolar yükleniyor...</div>
     </div>
-    <div class="yt__cta reveal">
-      <a
-        href={`https://youtube.com/@${site.youtubeChannelId}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="yt__channel-btn"
-      >
-        YouTube Kanalımızı Ziyaret Edin →
+    <div class="yt-more">
+      <a href="https://youtube.com/@delieminn" target="_blank" rel="noopener noreferrer" class="yt-more__link">
+        Tüm Videolar →
       </a>
     </div>
   </div>
 </section>
 
+<script>
+  async function loadYouTubeVideos() {
+    const grid = document.getElementById('ytGrid');
+    try {
+      const res = await fetch('/api/youtube');
+      if (!res.ok) throw new Error();
+      const videos = await res.json();
+
+      if (!videos.length) {
+        grid.innerHTML = '<p style="color:#888;text-align:center">Videolar yüklenemedi.</p>';
+        return;
+      }
+
+      grid.innerHTML = videos.map(v => `
+        <a href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener noreferrer" class="yt-card">
+          <div class="yt-card__thumb">
+            <img src="${v.thumbnail}" alt="${v.title}" loading="lazy" />
+            <div class="yt-card__play">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="white"><polygon points="9.5,7.5 16.5,12 9.5,16.5"/></svg>
+            </div>
+          </div>
+          <div class="yt-card__info">
+            <h3 class="yt-card__title">${v.title}</h3>
+            <span class="yt-card__meta">${v.views ? v.views.toLocaleString('tr-TR') + ' görüntülenme' : ''}</span>
+          </div>
+        </a>
+      `).join('');
+    } catch {
+      grid.innerHTML = '<p style="color:#888;text-align:center">Videolar yüklenemedi.</p>';
+    }
+  }
+  loadYouTubeVideos();
+</script>
+
 <style>
-  .yt__grid {
+  .yt-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: var(--space-lg);
+    min-height: 200px;
   }
 
-  .yt__card {
-    text-decoration: none;
-    display: block;
+  .yt-loading {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--color-text-tertiary);
+    padding: 3rem 0;
   }
 
-  .yt__thumb {
-    position: relative;
-    border-radius: var(--radius-md);
+  .yt-card {
+    background: var(--color-bg-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-lg);
     overflow: hidden;
-    aspect-ratio: 16/9;
-    margin-bottom: var(--space-sm);
+    transition: border-color var(--transition-base), transform var(--transition-base);
   }
-  .yt__thumb img {
+  .yt-card:hover {
+    border-color: rgba(255,0,0,0.4);
+    transform: translateY(-2px);
+  }
+
+  .yt-card__thumb {
+    position: relative;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+  }
+  .yt-card__thumb img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform var(--transition-base);
   }
-  .yt__card:hover .yt__thumb img { transform: scale(1.05); }
+  .yt-card:hover .yt-card__thumb img { transform: scale(1.05); }
 
-  .yt__play {
+  .yt-card__play {
     position: absolute;
     inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     background: rgba(0,0,0,0.3);
-    color: var(--color-white);
     opacity: 0;
     transition: opacity var(--transition-base);
   }
-  .yt__card:hover .yt__play { opacity: 1; }
+  .yt-card:hover .yt-card__play { opacity: 1; }
 
-  .yt__title {
+  .yt-card__info { padding: var(--space-md); }
+  .yt-card__title {
     font-size: var(--text-small);
-    color: var(--color-text-secondary);
+    font-weight: 600;
     line-height: 1.4;
+    margin-bottom: 0.3rem;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-  .yt__card:hover .yt__title { color: var(--color-white); }
-
-  .yt__cta {
-    text-align: center;
-    margin-top: var(--space-2xl);
+  .yt-card__meta {
+    font-size: var(--text-caption);
+    color: var(--color-text-tertiary);
   }
 
-  .yt__channel-btn {
-    font-family: var(--font-heading);
-    font-weight: 600;
+  .yt-more {
+    text-align: center;
+    margin-top: var(--space-xl);
+  }
+  .yt-more__link {
+    font-family: var(--font-mono);
     font-size: var(--text-small);
     color: var(--color-accent);
+    letter-spacing: 0.05em;
     transition: color var(--transition-fast);
   }
-  .yt__channel-btn:hover { color: var(--color-accent-hover); }
-
-  @media (max-width: 1024px) { .yt__grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 480px) { .yt__grid { grid-template-columns: 1fr; } }
+  .yt-more__link:hover { color: var(--color-white); }
 </style>
