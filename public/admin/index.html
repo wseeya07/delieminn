@@ -129,6 +129,20 @@
     <!-- TAB: PROJELER -->
     <div id="tab-projeler" class="tab-content active">
       <div class="editor-layout">
+        <!-- PREVIEW SUTUNU -->
+        <div class="preview-section">
+          <div class="preview-header">
+            <span style="font-size:0.9rem; color:var(--text-muted)">Canlı Önizleme</span>
+            <div>
+              <button type="button" class="btn btn-outline" style="font-size:0.7rem; padding:0.3rem" onclick="togglePreview('pc')">💻 PC</button>
+              <button type="button" class="btn btn-outline" style="font-size:0.7rem; padding:0.3rem" onclick="togglePreview('mobile')">📱 Mobil</button>
+            </div>
+          </div>
+          <div class="preview-body" id="previewArea">
+            <p style="color:#888; text-align:center; margin-top:2rem;">Yazılan içerik burada HTML olarak görünecektir...</p>
+          </div>
+        </div>
+
         <!-- FORM SUTUNU -->
         <div class="form-section">
           <form id="projectForm">
@@ -174,20 +188,6 @@
           <div style="margin-top: 3rem; border-top: 1px solid var(--border); padding-top: 1rem;">
             <h3 style="margin-bottom:1rem; color:var(--text-muted)">Mevcut Projeler</h3>
             <div id="projectsList">Yükleniyor...</div>
-          </div>
-        </div>
-
-        <!-- PREVIEW SUTUNU -->
-        <div class="preview-section">
-          <div class="preview-header">
-            <span style="font-size:0.9rem; color:var(--text-muted)">Canlı Önizleme</span>
-            <div>
-              <button type="button" class="btn btn-outline" style="font-size:0.7rem; padding:0.3rem" onclick="togglePreview('pc')">💻 PC</button>
-              <button type="button" class="btn btn-outline" style="font-size:0.7rem; padding:0.3rem" onclick="togglePreview('mobile')">📱 Mobil</button>
-            </div>
-          </div>
-          <div class="preview-body" id="previewArea">
-            <p style="color:#888; text-align:center; margin-top:2rem;">Yazılan içerik burada HTML olarak görünecektir...</p>
           </div>
         </div>
       </div>
