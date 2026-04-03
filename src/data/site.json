@@ -8,19 +8,19 @@
   "address": "Çakırlar, Medrese sokak 1/A, 07070 Konyaaltı/Antalya",
   "mapEmbed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3191.8147023075758!2d30.5683617!3d36.87085390000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c393004b5f3189%3A0x4e795c2301ad35e9!2sDeliemin%20MotoExperTR%20-%20Antalya%20Motor%20Ekspertiz!5e0!3m2!1str!2str!4v1775168403088!5m2!1str!2str",
   "hero": {
-    "badge": "ECU Yazılım · Dyno Test · Performans",
+    "badge": "ECU Yazılım · Dyno Test · Ekspertiz",
     "headline": "MOTORUN BEYNİNİ BİZ YAZIYORUZ",
-    "subheadline": "ECU Remap, Chip Tuning, Dyno Test ve performans modifikasyonlarında Türkiye'nin referans noktası. Stok beyinden maksimum güç, veri odaklı sonuçlar.",
+    "subheadline": "ECU Remap, Dyno Test ve modifikasyonda Türkiye'nin referans noktası. Yazılımın ötesinde tam kapsamlı motor ekspertiz, arıza tespiti ve mekanik tamir hizmetleri.",
     "ctaPrimary": "Randevu Al",
     "ctaSecondary": "Projelerimizi Gör"
   },
   "about": {
     "title": "Hakkımızda",
-    "subtitle": "Veri Odaklı, Sonuç Garantili",
+    "subtitle": "Emeğe Saygı, Veriye Dayalı İşçilik",
     "paragraphs": [
-      "Her motora aynı hassasiyetle yaklaşıyoruz. Stok beyinden maksimum güç çıkarmak, dyno'da veri okumak, CVT'yi optimize etmek — bunlar bizim için sadece iş değil, tutku.",
-      "Türkiye'de kimsenin yapmadığını yapmak, dünyada ilk olanı başarmak — Deli Eminn bu yüzden var. XMAX stok ECU'suna yazılım yazan ilk ekip, Peugeot XP400'e dünyada tek yazılım çözümünü üreten yer burasıdır.",
-      "Her işimizi YouTube kanalımızda şeffaf şekilde paylaşıyoruz. Dyno verileri, before/after sonuçları, teknik analizler — söylediğimiz her şeyin arkasında veri var."
+      "Bizim için her motosiklet kendi içinde farklı bir denklemdir. Dyno'da veri okumaktan tutun da mekanik arızaları çözmeye, detaylı ekspertiz yapmaktan ECU yazılımına kadar tüm süreçleri büyük bir merak ve özenle ele alıyoruz.",
+      "Yılların getirdiği tecrübeyle yetinmiyor, XMAX, Peugeot XP400, Zontes gibi modellerde sürekli yeni çözümler arıyoruz. 'Her şeyi en iyi biz yaparız' gibi bir iddiamız yok; ancak aldığımız her işi en dürüst, en temiz ve teknik verilere dayalı şekilde yapmak temel vizyonumuz.",
+      "Atölyemizde yapılan her işi, iyi kötü demeden şeffaf bir şekilde YouTube kanalımızda paylaşıyoruz. Dyno ölçümleri, mekanik incelemeler ve gerçek kullanıcı deneyimleri... Çünkü söylediğimiz her şeyin arkasında ölçülebilir bir veri olmasına inanıyoruz."
     ]
   },
   "contact": {
