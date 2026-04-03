@@ -1,0 +1,175 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+
+const allProjects = await getCollection('projects');
+const sorted = allProjects.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+function extractYouTubeId(url) {
+  if (!url) return null;
+  const match = url.match(/(?:youtu\.be\/|v=|\/embed\/)([a-zA-Z0-9_-]{11})/);
+  return match ? match[1] : null;
+}
+---
+<BaseLayout title="Projeler — Deli Eminn Motoexper" description="ECU yazılım, dyno test ve performans modifikasyon projelerimiz.">
+  <Navbar />
+  <main class="section projects-page">
+    <div class="container">
+      <SectionHeader label="Tüm Çalışmalar">Projelerimiz</SectionHeader>
+
+      {sorted.length > 0 ? (
+        <div class="projects-list">
+          {sorted.map((project) => {
+            const ytId = extractYouTubeId(project.data.videoUrl);
+            const formattedDate = new Date(project.data.date).toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' });
+            return (
+              <article class="project-row">
+                <div class="project-row__video">
+                  {ytId ? (
+                    <iframe
+                      src={`https://www.youtube.com/embed/${ytId}`}
+                      title={project.data.title}
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen
+                      loading="lazy"
+                    ></iframe>
+                  ) : (
+                    <div class="project-row__placeholder">
+                      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <rect x="2" y="4" width="20" height="16" rx="3" />
+                        <polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none" />
+                      </svg>
+                      <span>Video yakında eklenecek</span>
+                    </div>
+                  )}
+                </div>
+
+                <div class="project-row__info">
+                  <div class="project-row__meta">
+                    <span class="project-row__category">{project.data.category}</span>
+                    {project.data.brand && <span class="project-row__brand">{project.data.brand}</span>}
+                    <span class="project-row__date">{formattedDate}</span>
+                  </div>
+                  <h2 class="project-row__title">{project.data.title}</h2>
+                  <p class="project-row__desc">{project.data.description}</p>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      ) : (
+        <p class="projects-empty">Projeler yakında eklenecek.</p>
+      )}
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .projects-page { padding-top: 8rem; }
+
+  .projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .project-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl);
+    background: var(--color-bg-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: border-color var(--transition-base);
+  }
+  .project-row:hover { border-color: rgba(230,57,70,0.3); }
+
+  .project-row__video {
+    aspect-ratio: 16/9;
+    background: var(--color-bg-secondary);
+  }
+  .project-row__video iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  .project-row__placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    color: var(--color-text-tertiary);
+    font-size: var(--text-small);
+  }
+
+  .project-row__info {
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .project-row__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    align-items: center;
+    margin-bottom: var(--space-md);
+  }
+
+  .project-row__category {
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid rgba(230,57,70,0.3);
+    border-radius: var(--radius-sm);
+  }
+
+  .project-row__brand {
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    color: var(--color-text-secondary);
+  }
+
+  .project-row__date {
+    font-size: var(--text-caption);
+    color: var(--color-text-tertiary);
+  }
+
+  .project-row__title {
+    font-size: var(--text-h2);
+    line-height: 1.2;
+    margin-bottom: var(--space-md);
+  }
+
+  .project-row__desc {
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    font-size: var(--text-body);
+  }
+
+  .projects-empty {
+    text-align: center;
+    color: var(--color-text-tertiary);
+    padding: 4rem 0;
+  }
+
+  @media (max-width: 768px) {
+    .project-row { grid-template-columns: 1fr; }
+    .project-row__info { padding: var(--space-lg); }
+  }
+</style>

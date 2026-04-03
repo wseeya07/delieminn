@@ -1,0 +1,66 @@
+{
+  "brand": "Deli Eminn",
+  "brandFull": "Deli Eminn Motoexper",
+  "tagline": "ECU Yazılım · Dyno Test · Performans Modifikasyon",
+  "phone": "+90 535 697 97 60",
+  "whatsapp": "https://wa.me/905356979760",
+  "whatsappGroup": "https://chat.whatsapp.com/Dn30ZHf45B2LYn0XgOrVmi",
+  "address": "Çakırlar, Medrese sokak 1/A, 07070 Konyaaltı/Antalya",
+  "mapEmbed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3191.8147023075758!2d30.5683617!3d36.87085390000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c393004b5f3189%3A0x4e795c2301ad35e9!2sDeliemin%20MotoExperTR%20-%20Antalya%20Motor%20Ekspertiz!5e0!3m2!1str!2str!4v1775168403088!5m2!1str!2str",
+  "hero": {
+    "badge": "ECU Yazılım · Dyno Test · Performans",
+    "headline": "MOTORUN BEYNİNİ BİZ YAZIYORUZ",
+    "subheadline": "ECU Remap, Chip Tuning, Dyno Test ve performans modifikasyonlarında Türkiye'nin referans noktası. Stok beyinden maksimum güç, veri odaklı sonuçlar.",
+    "ctaPrimary": "Randevu Al",
+    "ctaSecondary": "Projelerimizi Gör"
+  },
+  "about": {
+    "title": "Hakkımızda",
+    "subtitle": "Veri Odaklı, Sonuç Garantili",
+    "paragraphs": [
+      "Her motora aynı hassasiyetle yaklaşıyoruz. Stok beyinden maksimum güç çıkarmak, dyno'da veri okumak, CVT'yi optimize etmek — bunlar bizim için sadece iş değil, tutku.",
+      "Türkiye'de kimsenin yapmadığını yapmak, dünyada ilk olanı başarmak — Deli Eminn bu yüzden var. XMAX stok ECU'suna yazılım yazan ilk ekip, Peugeot XP400'e dünyada tek yazılım çözümünü üreten yer burasıdır.",
+      "Her işimizi YouTube kanalımızda şeffaf şekilde paylaşıyoruz. Dyno verileri, before/after sonuçları, teknik analizler — söylediğimiz her şeyin arkasında veri var."
+    ]
+  },
+  "contact": {
+    "title": "Performans İçin Bir Adım",
+    "subtitle": "ECU yazılım, dyno test veya modifikasyon — ihtiyacınız ne olursa olsun, bir mesaj uzağınızdayız.",
+    "ctaPrimary": "Randevu Al",
+    "ctaSecondary": "Hemen Ara"
+  },
+  "social": {
+    "instagram": "https://instagram.com/deliemin07",
+    "youtube": "https://youtube.com/@delieminn",
+    "facebook": "https://facebook.com/Delieminn",
+    "telegram": "https://t.me/zontesturkey"
+  },
+  "nav": [
+    { "label": "Uzmanlıklar", "href": "/#uzmanlik" },
+    { "label": "Projeler", "href": "/projeler" },
+    { "label": "Hakkımızda", "href": "/#hakkimizda" },
+    { "label": "SSS", "href": "/#sss" },
+    { "label": "İletişim", "href": "/#iletisim" }
+  ],
+  "achievements": [
+    { "icon": "🇹🇷", "title": "Türkiye'de İlk", "description": "XMAX Stok ECU Yazılımı" },
+    { "icon": "🌍", "title": "Dünyada Tek", "description": "Peugeot XP400 ECU Yazılımı" },
+    { "icon": "📊", "title": "Dyno Verileriyle", "description": "Kanıtlanmış Sonuçlar" },
+    { "icon": "🎥", "title": "YouTube'da Şeffaf", "description": "Her İş Belgeleniyor" }
+  ],
+  "expertise": [
+    { "icon": "💻", "title": "ECU Remap & Chip Tuning", "description": "Stok ve aftermarket ECU yazılımları. Boot modunda chip tuning dahil. XMAX, Vespa, PCX, Zontes ve daha fazlası." },
+    { "icon": "📊", "title": "Dyno Test & Analiz", "description": "Gerçek güç ölçümleri, AFR analizi, before/after karşılaştırma. Yazılım sonuçlarını dyno'da kanıtlıyoruz." },
+    { "icon": "⚙️", "title": "CVT Performans", "description": "Scooter CVT setup, variator, roller, kontra yay optimizasyonu. Maksimum hızlanma ve üst hız dengesi." },
+    { "icon": "🔧", "title": "Motor Revizyon", "description": "Komple motor sökme-takma, silindir honlama, iç parça inceleme. Motorun içinden geçip sıfır performans veriyoruz." },
+    { "icon": "🛡️", "title": "Süspansiyon & Şase", "description": "Amortisör alçaltma/revizyonu, şase analizi, sürüş setup'ı. Pist veya şehir kullanımına özel ayar." },
+    { "icon": "🔍", "title": "Arıza Teşhis & Çözüm", "description": "Üretici kaynaklı hatalı ECU kodlamaları dahil, başkalarının çözemediği arızalarda uzmanlık." }
+  ],
+  "youtubeChannelId": "delieminn",
+  "youtubeVideos": [
+    { "id": "VIDEO_ID_1", "title": "XMAX 300'ü 350cc Yaptık! TDR Kit + Dyno Sonuçları" },
+    { "id": "VIDEO_ID_2", "title": "Yamaha XMAX 300 Tuneboss ECU | Dyno + AFR Canlı" },
+    { "id": "VIDEO_ID_3", "title": "BOOT Modunda Motosiklet Chip Tuning Nasıl Yapılır?" },
+    { "id": "VIDEO_ID_4", "title": "Kıbrıs'tan Emin Olmak İçin Geldiler | AK550 & XP400" }
+  ]
+}

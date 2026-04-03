@@ -1,0 +1,113 @@
+---
+import site from '../data/site.json';
+import SectionHeader from './ui/SectionHeader.astro';
+const videos = site.youtubeVideos;
+---
+<section class="section" id="youtube">
+  <div class="container">
+    <SectionHeader label="YouTube">Son Videolar</SectionHeader>
+    <div class="yt__grid reveal-stagger">
+      {videos.map((v) => (
+        <a
+          href={`https://youtube.com/watch?v=${v.id}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="yt__card"
+        >
+          <div class="yt__thumb">
+            <img
+              src={`https://img.youtube.com/vi/${v.id}/mqdefault.jpg`}
+              alt={v.title}
+              loading="lazy"
+            />
+            <div class="yt__play">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+          </div>
+          <p class="yt__title">{v.title}</p>
+        </a>
+      ))}
+    </div>
+    <div class="yt__cta reveal">
+      <a
+        href={`https://youtube.com/@${site.youtubeChannelId}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="yt__channel-btn"
+      >
+        YouTube Kanalımızı Ziyaret Edin →
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .yt__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .yt__card {
+    text-decoration: none;
+    display: block;
+  }
+
+  .yt__thumb {
+    position: relative;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    margin-bottom: var(--space-sm);
+  }
+  .yt__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-base);
+  }
+  .yt__card:hover .yt__thumb img { transform: scale(1.05); }
+
+  .yt__play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.3);
+    color: var(--color-white);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+  }
+  .yt__card:hover .yt__play { opacity: 1; }
+
+  .yt__title {
+    font-size: var(--text-small);
+    color: var(--color-text-secondary);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .yt__card:hover .yt__title { color: var(--color-white); }
+
+  .yt__cta {
+    text-align: center;
+    margin-top: var(--space-2xl);
+  }
+
+  .yt__channel-btn {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: var(--text-small);
+    color: var(--color-accent);
+    transition: color var(--transition-fast);
+  }
+  .yt__channel-btn:hover { color: var(--color-accent-hover); }
+
+  @media (max-width: 1024px) { .yt__grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .yt__grid { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,111 @@
+---
+import site from '../data/site.json';
+import Button from './ui/Button.astro';
+---
+<section class="section cta" id="iletisim">
+  <div class="container">
+    <div class="cta__wrapper reveal">
+      <div class="cta__content">
+        <span class="cta__label">İletişim</span>
+        <h2 class="cta__title">{site.contact.title}</h2>
+        <p class="cta__subtitle">{site.contact.subtitle}</p>
+        <div class="cta__actions">
+          <Button href={site.whatsapp} variant="primary" size="lg">{site.contact.ctaPrimary}</Button>
+          <Button href={`tel:${site.phone.replace(/\s/g, '')}`} variant="outline" size="lg">{site.contact.ctaSecondary}</Button>
+        </div>
+        <div class="cta__info">
+          <div class="cta__info-item">
+            <span class="cta__info-label">Telefon</span>
+            <a href={`tel:${site.phone.replace(/\s/g, '')}`} class="cta__info-value">{site.phone}</a>
+          </div>
+          <div class="cta__info-item">
+            <span class="cta__info-label">Adres</span>
+            <span class="cta__info-value">{site.address}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta__map">
+        <iframe
+          src={site.mapEmbed}
+          width="100%"
+          height="100%"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Deli Eminn Motoexper Konum"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta__wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl);
+    background: var(--color-bg-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .cta__content {
+    padding: var(--space-3xl);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .cta__label {
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: var(--space-md);
+  }
+
+  .cta__title {
+    font-size: var(--text-h1);
+    margin-bottom: var(--space-md);
+  }
+
+  .cta__subtitle {
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin-bottom: var(--space-xl);
+    max-width: 400px;
+  }
+
+  .cta__actions {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .cta__info { display: flex; flex-direction: column; gap: var(--space-md); }
+  .cta__info-item { display: flex; flex-direction: column; gap: 2px; }
+  .cta__info-label { font-family: var(--font-mono); font-size: var(--text-caption); color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.1em; }
+  .cta__info-value { font-size: var(--text-small); color: var(--color-text-secondary); }
+
+  .cta__map {
+    min-height: 400px;
+    background: var(--color-bg-secondary);
+  }
+  .cta__map iframe {
+    width: 100%;
+    height: 100%;
+    display: block;
+    filter: grayscale(0.6) brightness(0.7) contrast(1.1);
+  }
+
+  @media (max-width: 768px) {
+    .cta__wrapper { grid-template-columns: 1fr; }
+    .cta__content { padding: var(--space-xl); }
+    .cta__map { min-height: 300px; }
+  }
+</style>

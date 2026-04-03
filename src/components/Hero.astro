@@ -1,0 +1,104 @@
+---
+import site from '../data/site.json';
+import Button from './ui/Button.astro';
+const { badge, headline, subheadline, ctaPrimary, ctaSecondary } = site.hero;
+---
+<section class="hero" id="hero">
+  <div class="hero__bg">
+    <div class="hero__gradient"></div>
+    <div class="hero__grid-pattern"></div>
+    <div class="hero__ambient hero__ambient--red"></div>
+  </div>
+
+  <div class="container hero__content">
+    <span class="hero__badge">{badge}</span>
+    <h1 class="hero__headline">{headline}</h1>
+    <p class="hero__sub">{subheadline}</p>
+    <div class="hero__actions">
+      <Button href={site.whatsapp} variant="primary" size="lg">{ctaPrimary}</Button>
+      <Button href="/projeler" variant="outline" size="lg">{ctaSecondary}</Button>
+    </div>
+    <div class="hero__brands">
+      <span>XMAX</span><span>·</span>
+      <span>Vespa</span><span>·</span>
+      <span>PCX</span><span>·</span>
+      <span>Zontes</span><span>·</span>
+      <span>XP400</span><span>·</span>
+      <span>XADV</span><span>·</span>
+      <span>Rieju</span><span>·</span>
+      <span>Triumph</span>
+    </div>
+  </div>
+
+  <div class="hero__scroll-hint"><span></span></div>
+</section>
+
+<style>
+  .hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; }
+
+  .hero__bg { position: absolute; inset: 0; z-index: 0; }
+  .hero__gradient {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(230,57,70,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 80%, rgba(46,134,222,0.05) 0%, transparent 50%),
+                var(--color-bg-primary);
+  }
+  .hero__grid-pattern {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero__ambient {
+    position: absolute; width: 500px; height: 500px; border-radius: 50%;
+    filter: blur(120px); opacity: 0.2;
+  }
+  .hero__ambient--red { bottom: -150px; left: -100px; background: var(--color-red); }
+
+  .hero__content { position: relative; z-index: 1; max-width: 800px; }
+  .hero__badge {
+    display: inline-block; font-family: var(--font-mono); font-size: var(--text-caption);
+    color: var(--color-accent); text-transform: uppercase; letter-spacing: 0.2em;
+    padding: 0.4rem 1rem; border: 1px solid rgba(230,57,70,0.3);
+    border-radius: var(--radius-full); margin-bottom: var(--space-lg);
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero__headline {
+    font-family: var(--font-display); font-size: var(--text-hero);
+    line-height: 0.95; letter-spacing: 0.02em; margin-bottom: var(--space-lg);
+    animation: fadeUp 0.7s 0.15s ease both;
+  }
+  .hero__sub {
+    font-size: clamp(1rem, 1.5vw, 1.15rem); color: var(--color-text-secondary);
+    max-width: 560px; line-height: 1.7; margin-bottom: var(--space-xl);
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+  .hero__actions {
+    display: flex; gap: var(--space-md); flex-wrap: wrap;
+    margin-bottom: var(--space-2xl); animation: fadeUp 0.7s 0.45s ease both;
+  }
+  .hero__brands {
+    display: flex; flex-wrap: wrap; gap: var(--space-sm);
+    font-family: var(--font-mono); font-size: var(--text-caption);
+    color: var(--color-text-tertiary); letter-spacing: 0.05em;
+    animation: fadeUp 0.7s 0.6s ease both;
+  }
+
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  .hero__scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 1; }
+  .hero__scroll-hint span {
+    display: block; width: 1.5px; height: 40px;
+    background: linear-gradient(to bottom, var(--color-accent), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse { 0%, 100% { opacity: 0.3; transform: scaleY(0.6); } 50% { opacity: 1; transform: scaleY(1); } }
+
+  @media (max-width: 768px) {
+    .hero__content { padding-top: 6rem; }
+    .hero__actions { flex-direction: column; }
+    .hero__ambient { width: 300px; height: 300px; }
+  }
+</style>

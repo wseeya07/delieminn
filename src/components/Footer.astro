@@ -1,0 +1,93 @@
+---
+import site from '../data/site.json';
+---
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="/" class="footer__logo">
+          <span class="footer__logo-deli">DELİ</span>
+          <span class="footer__logo-eminn">EMİNN</span>
+        </a>
+        <p class="footer__tagline">{site.tagline}</p>
+      </div>
+
+      <div class="footer__col">
+        <h4 class="footer__col-title">Hızlı Erişim</h4>
+        {site.nav.map(item => (
+          <a href={item.href} class="footer__link">{item.label}</a>
+        ))}
+        <a href="/projeler" class="footer__link">Tüm Projeler</a>
+      </div>
+
+      <div class="footer__col">
+        <h4 class="footer__col-title">İletişim</h4>
+        <a href={`tel:${site.phone.replace(/\s/g, '')}`} class="footer__link">{site.phone}</a>
+        <a href={site.whatsapp} target="_blank" rel="noopener noreferrer" class="footer__link">WhatsApp</a>
+        <span class="footer__link">{site.address}</span>
+      </div>
+    </div>
+
+    <div class="footer__bar">
+      <span class="footer__copy">© {new Date().getFullYear()} {site.brandFull}. Tüm hakları saklıdır.</span>
+      <div class="footer__social">
+        <a href={site.social.youtube} target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="4"/><polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href={site.social.telegram} target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.03-1.99 1.27-5.63 3.72-.53.37-1.01.55-1.44.54-.47-.01-1.38-.27-2.06-.49-.83-.27-1.49-.42-1.43-.88.03-.24.37-.49 1.02-.74 3.98-1.73 6.64-2.87 7.97-3.43 3.79-1.58 4.58-1.86 5.09-1.87.11 0 .37.03.54.17.14.12.18.28.2.47-.01.06.01.24 0 .38z"/></svg>
+        </a>
+        <a href={site.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--color-bg-secondary);
+    border-top: var(--border-subtle);
+    padding: var(--space-3xl) 0 var(--space-xl);
+  }
+  .footer__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: var(--space-2xl);
+    margin-bottom: var(--space-2xl);
+  }
+  .footer__logo {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    display: flex;
+    gap: 0.25rem;
+    margin-bottom: var(--space-sm);
+  }
+  .footer__logo-deli { color: var(--color-accent); }
+  .footer__logo-eminn { color: var(--color-white); }
+  .footer__tagline { color: var(--color-text-tertiary); font-size: var(--text-small); }
+  .footer__col { display: flex; flex-direction: column; gap: var(--space-sm); }
+  .footer__col-title { font-size: var(--text-small); font-weight: 600; margin-bottom: var(--space-xs); }
+  .footer__link { font-size: var(--text-small); color: var(--color-text-secondary); transition: color var(--transition-fast); }
+  .footer__link:hover { color: var(--color-white); }
+  .footer__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: var(--space-xl);
+    border-top: var(--border-subtle);
+  }
+  .footer__copy { font-size: var(--text-caption); color: var(--color-text-tertiary); }
+  .footer__social { display: flex; gap: var(--space-md); }
+  .footer__social a { color: var(--color-text-tertiary); transition: color var(--transition-fast); }
+  .footer__social a:hover { color: var(--color-white); }
+
+  @media (max-width: 768px) {
+    .footer__grid { grid-template-columns: 1fr; gap: var(--space-xl); }
+    .footer__bar { flex-direction: column; gap: var(--space-md); text-align: center; }
+  }
+</style>

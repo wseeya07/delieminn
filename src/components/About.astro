@@ -1,0 +1,92 @@
+---
+import site from '../data/site.json';
+import SectionHeader from './ui/SectionHeader.astro';
+const { subtitle, paragraphs } = site.about;
+---
+<section class="section" id="hakkimizda">
+  <div class="container about__layout reveal">
+    <div class="about__image-wrap">
+      <img src="/images/about/workshop.jpg" alt="Deli Eminn Atölye" class="about__image" loading="lazy" />
+      <div class="about__image-glow"></div>
+    </div>
+    <div class="about__content">
+      <SectionHeader label="Biz Kimiz">{subtitle}</SectionHeader>
+      {paragraphs.map((p) => (
+        <p class="about__text">{p}</p>
+      ))}
+      <div class="about__social">
+        <a href={site.social.youtube} target="_blank" rel="noopener noreferrer" class="about__social-link">
+          YouTube
+        </a>
+        <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" class="about__social-link">
+          Instagram
+        </a>
+        <a href={site.social.telegram} target="_blank" rel="noopener noreferrer" class="about__social-link">
+          Telegram
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about__layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    align-items: center;
+  }
+
+  .about__image-wrap { position: relative; }
+
+  .about__image {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    aspect-ratio: 4/5;
+    object-fit: cover;
+  }
+
+  .about__image-glow {
+    position: absolute;
+    bottom: -20px;
+    left: -20px;
+    width: 60%;
+    height: 60%;
+    background: var(--color-red);
+    filter: blur(80px);
+    opacity: 0.12;
+    border-radius: 50%;
+    z-index: -1;
+  }
+
+  .about__text {
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    margin-bottom: var(--space-md);
+  }
+
+  .about__social {
+    display: flex;
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+  }
+
+  .about__social-link {
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    color: var(--color-text-tertiary);
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+  }
+  .about__social-link:hover {
+    color: var(--color-white);
+    border-color: var(--color-white-muted);
+  }
+
+  @media (max-width: 768px) {
+    .about__layout { grid-template-columns: 1fr; gap: var(--space-xl); }
+    .about__image { aspect-ratio: 16/10; }
+  }
+</style>

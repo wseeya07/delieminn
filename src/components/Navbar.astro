@@ -1,0 +1,127 @@
+---
+import site from '../data/site.json';
+---
+<nav class="navbar" id="navbar">
+  <div class="container navbar__inner">
+    <a href="/" class="navbar__logo">
+      <img src="/images/logo.png" alt="Deli Eminn" class="navbar__logo-img" />
+      <span class="navbar__logo-text">
+        <span class="navbar__logo-deli">DELİ</span>
+        <span class="navbar__logo-eminn">EMİNN</span>
+      </span>
+    </a>
+
+    <ul class="navbar__links">
+      {site.nav.map(item => (
+        <li><a href={item.href} class="navbar__link">{item.label}</a></li>
+      ))}
+    </ul>
+
+    <a href={site.whatsapp} target="_blank" rel="noopener noreferrer" class="navbar__cta">
+      Randevu Al
+    </a>
+
+    <button class="navbar__hamburger" id="nav-toggle" aria-label="Menüyü aç">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <div class="navbar__overlay" id="nav-overlay">
+    <ul class="navbar__overlay-links">
+      {site.nav.map(item => (
+        <li><a href={item.href} class="navbar__overlay-link">{item.label}</a></li>
+      ))}
+      <li>
+        <a href={site.whatsapp} target="_blank" rel="noopener noreferrer" class="navbar__overlay-cta">
+          Randevu Al
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  const toggle = document.getElementById('nav-toggle');
+  const overlay = document.getElementById('nav-overlay');
+
+  window.addEventListener('scroll', () => {
+    navbar?.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = overlay?.classList.toggle('open');
+    toggle?.classList.toggle('open', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+
+  overlay?.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      overlay?.classList.remove('open');
+      toggle?.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+</script>
+
+<style>
+  .navbar {
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+    padding: 1rem 0;
+    transition: background var(--transition-base), padding var(--transition-base);
+  }
+  .navbar.scrolled {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    padding: 0.6rem 0;
+    border-bottom: var(--border-subtle);
+  }
+  .navbar__inner { display: flex; align-items: center; justify-content: space-between; }
+
+  .navbar__logo { display: flex; align-items: center; gap: 0.5rem; }
+  .navbar__logo-img { height: 36px; width: auto; }
+  .navbar__logo-text { font-family: var(--font-display); font-size: 1.5rem; display: flex; gap: 0.25rem; }
+  .navbar__logo-deli { color: var(--color-accent); }
+  .navbar__logo-eminn { color: var(--color-white); }
+
+  .navbar__links { display: flex; gap: var(--space-xl); }
+  .navbar__link { font-size: var(--text-small); color: var(--color-text-secondary); transition: color var(--transition-fast); font-weight: 500; }
+  .navbar__link:hover { color: var(--color-white); }
+
+  .navbar__cta {
+    background: var(--color-accent); color: var(--color-white);
+    padding: 0.5rem 1.2rem; border-radius: var(--radius-md);
+    font-size: var(--text-small); font-weight: 600;
+    transition: all var(--transition-base);
+  }
+  .navbar__cta:hover { background: var(--color-accent-hover); box-shadow: var(--glow-red); }
+
+  .navbar__hamburger { display: none; flex-direction: column; gap: 5px; padding: 4px; }
+  .navbar__hamburger span { display: block; width: 24px; height: 2px; background: var(--color-white); transition: all var(--transition-base); transform-origin: center; }
+  .navbar__hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .navbar__hamburger.open span:nth-child(2) { opacity: 0; }
+  .navbar__hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+  .navbar__overlay {
+    position: fixed; inset: 0;
+    background: rgba(10,10,11,0.97);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity var(--transition-base);
+    z-index: 999;
+  }
+  .navbar__overlay.open { opacity: 1; pointer-events: auto; }
+
+  .navbar__overlay-links { display: flex; flex-direction: column; align-items: center; gap: var(--space-xl); }
+  .navbar__overlay-link { font-family: var(--font-display); font-size: 2rem; color: var(--color-white); letter-spacing: 0.05em; }
+  .navbar__overlay-cta {
+    margin-top: var(--space-md); background: var(--color-accent); color: var(--color-white);
+    padding: 0.8rem 2rem; border-radius: var(--radius-md); font-weight: 600;
+  }
+
+  @media (max-width: 768px) {
+    .navbar__links, .navbar__cta { display: none; }
+    .navbar__hamburger { display: flex; }
+  }
+</style>

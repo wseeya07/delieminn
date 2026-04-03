@@ -1,0 +1,29 @@
+local_backend: true
+
+backend:
+  name: github
+  repo: batuhanuzun/delieminn
+  branch: main
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+locale: "tr"
+
+collections:
+  - name: "projects"
+    label: "Projeler"
+    folder: "src/content/projects"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Başlık", name: "title", widget: "string" }
+      - { label: "Tarih", name: "date", widget: "datetime" }
+      - { label: "Açıklama", name: "description", widget: "text" }
+      - { label: "YouTube Video Linki (opsiyonel)", name: "videoUrl", widget: "string", required: false }
+      - label: "Kategori"
+        name: "category"
+        widget: "select"
+        default: "Modifiye"
+        options: ["ECU Remap", "Dyno Test", "CVT", "Motor Revizyon", "Modifiye", "Bakım", "Arıza Çözüm"]
+      - { label: "Marka / Model (opsiyonel)", name: "brand", widget: "string", required: false }

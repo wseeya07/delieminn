@@ -1,0 +1,28 @@
+---
+const { label = '', href = '' } = Astro.props;
+---
+<span class="section-header reveal">
+  <span class="section-header__label">{label}</span>
+  <h2 class="section-header__title"><slot /></h2>
+</span>
+
+<style>
+  .section-header {
+    display: block;
+    margin-bottom: var(--space-2xl);
+  }
+  .section-header__label {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: var(--space-sm);
+  }
+  .section-header__title {
+    font-size: var(--text-h1);
+    font-weight: 700;
+    line-height: 1.1;
+  }
+</style>

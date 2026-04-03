@@ -1,0 +1,72 @@
+---
+import faq from '../data/faq.json';
+import SectionHeader from './ui/SectionHeader.astro';
+---
+<section class="section section--alt" id="sss">
+  <div class="container faq__container">
+    <SectionHeader label="Sık Sorulan Sorular">Merak Edilenler</SectionHeader>
+    <div class="faq__list reveal">
+      {faq.map((item, i) => (
+        <details class="faq__item">
+          <summary class="faq__question">
+            <span>{item.question}</span>
+            <svg class="faq__icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </summary>
+          <div class="faq__answer">
+            <p>{item.answer}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq__container { max-width: 800px; }
+
+  .faq__item {
+    border-bottom: var(--border-subtle);
+  }
+
+  .faq__question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding: var(--space-lg) 0;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: var(--text-body);
+    color: var(--color-text-primary);
+    transition: color var(--transition-fast);
+    list-style: none;
+  }
+  .faq__question::-webkit-details-marker { display: none; }
+  .faq__question:hover { color: var(--color-accent); }
+
+  .faq__icon {
+    flex-shrink: 0;
+    color: var(--color-text-tertiary);
+    transition: transform var(--transition-base);
+  }
+
+  .faq__item[open] .faq__icon { transform: rotate(180deg); }
+
+  .faq__item[open] .faq__question {
+    color: var(--color-accent);
+  }
+
+  .faq__answer {
+    padding-bottom: var(--space-lg);
+  }
+
+  .faq__answer p {
+    color: var(--color-text-secondary);
+    font-size: var(--text-small);
+    line-height: 1.75;
+    padding-left: var(--space-sm);
+    border-left: 2px solid var(--color-accent);
+  }
+</style>

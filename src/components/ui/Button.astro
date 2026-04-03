@@ -1,0 +1,56 @@
+---
+const { href = '#', variant = 'primary', size = 'md' } = Astro.props;
+const isExternal = href.startsWith('http');
+---
+<a
+  href={href}
+  class:list={['btn', `btn--${variant}`, `btn--${size}`]}
+  {...isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+>
+  <slot />
+</a>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
+    white-space: nowrap;
+    text-decoration: none;
+  }
+
+  .btn--md {
+    padding: 0.8rem 1.8rem;
+    font-size: var(--text-body);
+  }
+
+  .btn--lg {
+    padding: 1rem 2.4rem;
+    font-size: 1.05rem;
+  }
+
+  .btn--primary {
+    background: var(--color-accent);
+    color: var(--color-white);
+  }
+  .btn--primary:hover {
+    background: var(--color-accent-hover);
+    box-shadow: var(--glow-red);
+    transform: scale(1.03);
+  }
+
+  .btn--outline {
+    background: transparent;
+    color: var(--color-white);
+    border: 1px solid var(--color-border);
+  }
+  .btn--outline:hover {
+    border-color: var(--color-white-muted);
+    background: rgba(255,255,255,0.04);
+  }
+</style>

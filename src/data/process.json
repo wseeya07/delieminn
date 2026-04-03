@@ -1,0 +1,22 @@
+[
+  {
+    "step": 1,
+    "title": "İletişim & Randevu",
+    "description": "WhatsApp veya telefonla ulaşın. Aracınızı, ihtiyacınızı dinleyelim, uygun randevuyu ayarlayalım."
+  },
+  {
+    "step": 2,
+    "title": "Teşhis & Analiz",
+    "description": "Aracınızı dyno'ya alıyoruz. Mevcut güç, tork, AFR değerlerini ölçüp durumu analiz ediyoruz."
+  },
+  {
+    "step": 3,
+    "title": "Uygulama",
+    "description": "Yazılım, modifikasyon veya revizyon — onayladığınız planı hassasiyetle uyguluyoruz."
+  },
+  {
+    "step": 4,
+    "title": "Test & Teslim",
+    "description": "İşlem sonrası dyno'da tekrar test ediyoruz. Before/after verilerle sonucu kanıtlayıp teslim ediyoruz."
+  }
+]
