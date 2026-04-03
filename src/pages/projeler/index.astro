@@ -33,12 +33,8 @@ function extractFirstImage(body) {
             const ytId = extractYouTubeId(project.data.videoUrl);
             const firstImg = extractFirstImage(project.body); // proj.body Astro 4'te raw md
             
-            // Thumbnail önceliği: 1. Yt MQ Default, 2. Yazıdaki ilk resim, 3. Kapalı Kutu (Placeholder)
-            const thumbUrl = ytId 
-              ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` 
-              : defaultCoverImageFallback(); // Fonksiyon çağrısı yerine direkt resim urlsi de olur
-
-            const coverUrl = ytId ? `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg` : (firstImg || '/images/bgg.jpg');
+            // Thumbnail önceliği: 1. Yt HQ Default, 2. Yazıdaki ilk resim, 3. Kapalı Kutu (Placeholder)
+            const coverUrl = ytId ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` : (firstImg || '/images/bgg.jpg');
 
             const formattedDate = new Date(project.data.date).toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' });
             
