@@ -8,11 +8,16 @@ import SectionHeader from '../../components/ui/SectionHeader.astro';
 const allProjects = await getCollection('projects');
 const sorted = allProjects.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
-
-
 function extractYouTubeId(url) {
   if (!url) return null;
   const match = url.match(/(?:youtu\.be\/|v=|\/embed\/)([a-zA-Z0-9_-]{11})/);
+  return match ? match[1] : null;
+}
+
+// MD içindeki ilk görseli bulmak için basit bir regex (Cover Image niyetine)
+function extractFirstImage(body) {
+  if(!body) return null;
+  const match = body.match(/!\[.*?\]\((.*?)\)/);
   return match ? match[1] : null;
 }
 ---
@@ -23,44 +28,45 @@ function extractYouTubeId(url) {
       <SectionHeader label="Tüm Çalışmalar">Projelerimiz</SectionHeader>
 
       {sorted.length > 0 ? (
-        <div class="projects-list">
+        <div class="projects-grid">
           {sorted.map((project) => {
             const ytId = extractYouTubeId(project.data.videoUrl);
+            const firstImg = extractFirstImage(project.body); // proj.body Astro 4'te raw md
+            
+            // Thumbnail önceliği: 1. Yt MQ Default, 2. Yazıdaki ilk resim, 3. Kapalı Kutu (Placeholder)
+            const thumbUrl = ytId 
+              ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` 
+              : defaultCoverImageFallback(); // Fonksiyon çağrısı yerine direkt resim urlsi de olur
+
+            const coverUrl = ytId ? `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg` : (firstImg || '/images/bgg.jpg');
+
             const formattedDate = new Date(project.data.date).toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' });
+            
             return (
-              <article class="project-row">
-                <div class="project-row__video">
-                  {ytId ? (
-                    <iframe
-                      src={`https://www.youtube.com/embed/${ytId}`}
-                      title={project.data.title}
-                      frameborder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowfullscreen
-                      loading="lazy"
-                    ></iframe>
-                  ) : (
-                    <div class="project-row__placeholder">
-                      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                        <rect x="2" y="4" width="20" height="16" rx="3" />
-                        <polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none" />
-                      </svg>
-                      <span>Video yakında eklenecek</span>
+              <a href={`/projeler/${project.id.split('.')[0]}`} class="project-card">
+                <div class="project-card__media">
+                  <img src={coverUrl} alt={project.data.title} loading="lazy" />
+                  {ytId && (
+                    <div class="project-card__play">
+                      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
                     </div>
                   )}
                 </div>
 
-                <div class="project-row__info">
-                  <div class="project-row__meta">
-                    <span class="project-row__category">{project.data.category}</span>
-                    {project.data.brand && <span class="project-row__brand">{project.data.brand}</span>}
-                    <span class="project-row__date">{formattedDate}</span>
+                <div class="project-card__info">
+                  <div class="project-card__meta">
+                    <span class="project-card__category">{project.data.category}</span>
+                    <span class="project-card__date">{formattedDate}</span>
                   </div>
-                  <h2 class="project-row__title">{project.data.title}</h2>
-                  <div class="project-row__desc" set:html={project.rendered?.html || project.data.description}>
+                  <h3 class="project-card__title">{project.data.title}</h3>
+                  {project.data.brand && <span class="project-card__brand">{project.data.brand}</span>}
+                  
+                  <div class="project-card__action">
+                    <span>Detayları İncele</span>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                   </div>
                 </div>
-              </article>
+              </a>
             );
           })}
         </div>
@@ -75,134 +81,124 @@ function extractYouTubeId(url) {
 <style>
   .projects-page { padding-top: 8rem; }
 
-  .projects-list {
-    display: flex;
-    flex-direction: column;
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: var(--space-xl);
   }
 
-  .project-row {
-    display: grid;
-    grid-template-columns: 45% 1fr;
+  .project-card {
+    display: flex;
+    flex-direction: column;
     background: var(--color-bg-card);
     border: 1px solid rgba(255,255,255,0.05);
     border-radius: var(--radius-lg);
     overflow: hidden;
-    transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+    text-decoration: none;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   }
-  .project-row:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
-    border-color: rgba(230,57,70,0.3);
+  
+  .project-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(230,57,70,0.4);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.5);
   }
 
-  .project-row__video {
+  .project-card__media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    background: #111;
+  }
+
+  .project-card__media img {
     width: 100%;
     height: 100%;
-    background: #000;
-    border-right: 1px solid rgba(255,255,255,0.05);
-    display: flex;
-    align-items: center;
-  }
-  .project-row__video iframe {
-    width: 100%;
-    aspect-ratio: 16/9;
-    border: none;
-    display: block;
+    object-fit: cover;
+    transition: transform 0.5s ease;
   }
 
-  .project-row__placeholder {
-    width: 100%;
-    height: 100%;
-    min-height: 250px;
+  .project-card:hover .project-card__media img {
+    transform: scale(1.05);
+  }
+
+  .project-card__play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 48px;
+    height: 48px;
+    background: rgba(230,57,70,0.9);
+    color: white;
+    border-radius: 50%;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: var(--space-sm);
-    color: var(--color-text-tertiary);
-    font-size: var(--text-small);
+    backdrop-filter: blur(4px);
+    box-shadow: 0 4px 15px rgba(230,57,70,0.4);
+  }
+  .project-card__play svg {
+    width: 24px;
+    height: 24px;
+    margin-left: 3px;
   }
 
-  .project-row__info {
-    padding: var(--space-xl);
+  .project-card__info {
+    padding: var(--space-lg);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    flex: 1;
   }
 
-  .project-row__meta {
+  .project-card__meta {
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-sm);
+    justify-content: space-between;
     align-items: center;
-    margin-bottom: var(--space-md);
+    margin-bottom: var(--space-sm);
   }
 
-  .project-row__category {
-    font-family: var(--font-mono);
+  .project-card__category {
     font-size: var(--text-caption);
     color: var(--color-accent);
     text-transform: uppercase;
+    font-weight: 700;
     letter-spacing: 0.1em;
-    padding: 0.2rem 0.6rem;
-    background: rgba(230,57,70,0.1);
-    border: 1px solid rgba(230,57,70,0.2);
-    border-radius: var(--radius-sm);
   }
 
-  .project-row__brand {
-    font-family: var(--font-mono);
-    font-size: var(--text-caption);
-    color: var(--color-text-secondary);
-    padding-left: 0.5rem;
-    border-left: 1px solid rgba(255,255,255,0.1);
-  }
-
-  .project-row__date {
+  .project-card__date {
     font-size: var(--text-caption);
     color: var(--color-text-tertiary);
-    margin-left: auto;
   }
 
-  .project-row__title {
-    font-size: 1.8rem;
-    line-height: 1.3;
-    margin-bottom: var(--space-md);
+  .project-card__title {
+    font-size: 1.3rem;
     font-weight: 700;
+    color: var(--color-white);
+    line-height: 1.3;
+    margin-bottom: var(--space-xs);
   }
 
-  .project-row__desc {
+  .project-card__brand {
+    font-size: var(--text-small);
     color: var(--color-text-secondary);
-    line-height: 1.7;
-    font-size: var(--text-body);
-    margin-bottom: 0;
+    margin-bottom: var(--space-lg);
   }
-  .project-row__desc p {
-    margin-bottom: 1rem;
+
+  .project-card__action {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: auto;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    transition: color 0.3s ease;
   }
-  .project-row__desc img {
-    max-width: 100%;
-    height: auto;
-    border-radius: var(--radius-md);
-    margin: 1rem 0;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-  }
-  .project-row__desc ul, .project-row__desc ol {
-    margin-bottom: 1rem;
-    padding-left: 1.5rem;
-  }
-  .project-row__desc li {
-    margin-bottom: 0.3rem;
-  }
-  .project-row__desc h2, .project-row__desc h3 {
-    margin-top: 1.5rem;
-    margin-bottom: 0.8rem;
-    color: var(--color-white);
-  }
-  .project-row__desc a {
+  
+  .project-card:hover .project-card__action {
     color: var(--color-accent);
-    text-decoration: underline;
   }
 
   .projects-empty {
@@ -211,18 +207,7 @@ function extractYouTubeId(url) {
     padding: 4rem 0;
   }
 
-  @media (max-width: 900px) {
-    .project-row { 
-      grid-template-columns: 1fr; 
-    }
-    .project-row__video {
-      border-right: none;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-    .project-row__info { padding: var(--space-lg); }
-    .project-row__title { font-size: 1.5rem; }
-  }
-  @media (max-width: 480px) {
-    .project-row__date { display: none; }
+  @media (max-width: 768px) {
+    .projects-grid { grid-template-columns: 1fr; }
   }
 </style>

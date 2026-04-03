@@ -269,21 +269,24 @@
       const mdHtml = marked.parse(textarea.value || '*İçerik bekleniyor...*');
 
       preview.innerHTML = `
-        <article class="project-row">
-          <div class="project-row__video">
-            ${ytId 
-              ? `<iframe src="https://www.youtube.com/embed/${ytId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
-              : `<span>📸 (Video eklenmedi)</span>`
-            }
-          </div>
-          <div class="project-row__info">
-            <div class="project-row__meta">
-              <span class="project-row__category">${category}</span>
-              <span class="project-row__brand">${brand}</span>
-              <span class="project-row__date">${fDate}</span>
+        <article class="project-detail" style="border: 1px solid var(--border); border-radius: 8px; padding: 2rem;">
+          <header style="text-align:center; margin-bottom: 2rem;">
+            <div style="display:flex; justify-content:center; gap:1rem; margin-bottom:1rem;">
+              <span style="color:var(--accent); text-transform:uppercase; font-size:0.8rem; border:1px solid var(--accent); padding:0.2rem 0.5rem; border-radius:4px;">${category}</span>
+              <span style="color:#888; font-size:0.8rem;">${brand}</span>
+              <span style="color:#555; font-size:0.8rem;">${fDate}</span>
             </div>
-            <h2 class="project-row__title">${title}</h2>
-            <div class="project-row__desc">${mdHtml}</div>
+            <h1 style="font-size:2.5rem; line-height:1.2; margin:0;">${title}</h1>
+          </header>
+
+          ${ytId ? `
+            <div style="background:#000; width:100%; aspect-ratio:16/9; margin-bottom:2rem; border-radius:8px;">
+              <iframe src="https://www.youtube.com/embed/${ytId}" style="width:100%; height:100%; border:none;"></iframe>
+            </div>
+          ` : ''}
+
+          <div class="markdown-body" style="color:#ccc; line-height:1.8; font-size:1.1rem;">
+            ${mdHtml}
           </div>
         </article>
       `;

@@ -1,0 +1,233 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map(project => ({
+    params: { slug: project.id.split('.')[0] },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+
+function extractYouTubeId(url) {
+  if (!url) return null;
+  const match = url.match(/(?:youtu\.be\/|v=|\/embed\/)([a-zA-Z0-9_-]{11})/);
+  return match ? match[1] : null;
+}
+
+const ytId = extractYouTubeId(project.data.videoUrl);
+const formattedDate = new Date(project.data.date).toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<BaseLayout title={`${project.data.title} — Deli Eminn Motoexper`} description={project.data.title}>
+  <Navbar />
+  
+  <article class="project-detail">
+    {/* HERO KISMI */}
+    <header class="project-hero">
+      <div class="container">
+        <div class="project-hero__meta">
+          <span class="project-hero__category">{project.data.category}</span>
+          {project.data.brand && <span class="project-hero__brand">{project.data.brand}</span>}
+          <span class="project-hero__date">{formattedDate}</span>
+        </div>
+        <h1 class="project-hero__title">{project.data.title}</h1>
+      </div>
+    </header>
+
+    {/* MEDIA KISMI (YouTube Tam Ekran veya Yoksa Boşluk) */}
+    {ytId && (
+      <div class="project-media container">
+        <div class="video-container">
+          <iframe
+            src={`https://www.youtube.com/embed/${ytId}`}
+            title={project.data.title}
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    )}
+
+    {/* ICERIK KISMI (Geniş Okuma Alanı) */}
+    <div class="project-content container">
+      <div class="markdown-body">
+        <Content />
+      </div>
+      
+      <div class="project-back">
+        <a href="/projeler" class="btn-back">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Projeler Menüsüne Dön
+        </a>
+      </div>
+    </div>
+  </article>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .project-detail {
+    padding-top: 8rem;
+    padding-bottom: 4rem;
+  }
+
+  /* HERO */
+  .project-hero {
+    margin-bottom: var(--space-xl);
+    text-align: center;
+  }
+
+  .project-hero__meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .project-hero__category {
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    color: var(--color-accent);
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 0.3rem 0.8rem;
+    background: rgba(230,57,70,0.1);
+    border: 1px solid rgba(230,57,70,0.2);
+    border-radius: var(--radius-sm);
+  }
+
+  .project-hero__brand {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+  }
+
+  .project-hero__date {
+    font-size: 0.9rem;
+    color: var(--color-text-tertiary);
+  }
+
+  .project-hero__title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--color-white);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  /* MEDIA YOUTUBE */
+  .project-media {
+    margin-bottom: var(--space-2xl);
+  }
+  .video-container {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    aspect-ratio: 16/9;
+    background: #000;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+  .video-container iframe {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+  }
+
+  /* CONTENT MARKDOWN BODY */
+  .project-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .markdown-body {
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+    font-size: 1.1rem;
+    background: var(--color-bg-card);
+    padding: var(--space-2xl);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .markdown-body :global(h2), .markdown-body :global(h3) {
+    color: var(--color-white);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+
+  .markdown-body :global(h2) { font-size: 1.8rem; }
+  .markdown-body :global(h3) { font-size: 1.4rem; }
+  
+  .markdown-body :global(p) { margin-bottom: 1.5rem; }
+  
+  .markdown-body :global(ul), .markdown-body :global(ol) {
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+  }
+
+  .markdown-body :global(img) {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    margin: 2rem 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .markdown-body :global(a) {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+
+  /* BACK BUTTON */
+  .project-back {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    text-align: center;
+  }
+
+  .btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-white);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.8rem 1.5rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius-full);
+    transition: all 0.3s ease;
+  }
+
+  .btn-back:hover {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .markdown-body {
+      padding: var(--space-lg);
+      font-size: 1rem;
+    }
+    .project-hero__title { font-size: 2rem; }
+  }
+</style>
