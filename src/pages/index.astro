@@ -3,28 +3,30 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Navbar from '../components/Navbar.astro';
 import Hero from '../components/Hero.astro';
 import Achievements from '../components/Achievements.astro';
-import Expertise from '../components/Expertise.astro';
+import ServicesTabs from '../components/ServicesTabs.astro';
 import YouTubeFeed from '../components/YouTubeFeed.astro';
-import About from '../components/About.astro';
 import TechnicalInfo from '../components/TechnicalInfo.astro';
-import Process from '../components/Process.astro';
-import FAQ from '../components/FAQ.astro';
+import About from '../components/About.astro';
 import Reviews from '../components/Reviews.astro';
+
+import FAQ from '../components/FAQ.astro';
+import Process from '../components/Process.astro';
 import ContactCTA from '../components/ContactCTA.astro';
 import Footer from '../components/Footer.astro';
 ---
-<BaseLayout>
+<BaseLayout title="Deli Eminn MotoexperTR | ECU Yazılım & Dyno Test">
   <Navbar />
   <main>
     <Hero />
     <Achievements />
-    <Expertise />
+    <ServicesTabs />
     <YouTubeFeed />
     <About />
     <TechnicalInfo />
     <Process />
     <Reviews />
     <FAQ />
+
     <ContactCTA />
   </main>
   <Footer />

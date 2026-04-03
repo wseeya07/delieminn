@@ -41,7 +41,7 @@
     "telegram": "https://t.me/zontesturkey"
   },
   "nav": [
-    { "label": "Uzmanlıklar", "href": "/#uzmanlik" },
+    { "label": "Hizmetlerimiz", "href": "/#hizmetlerimiz" },
     { "label": "Projeler", "href": "/projeler" },
     { "label": "Hakkımızda", "href": "/#hakkimizda" },
     { "label": "SSS", "href": "/#sss" },
@@ -53,13 +53,108 @@
     { "icon": "🤝", "title": "Resmi İşbirlikleri", "description": "Distribütör ve Üretici Desteği" },
     { "icon": "📊", "title": "Veri Odaklı", "description": "Kanıtlanmış Dyno Sonuçları" }
   ],
-  "expertise": [
-    { "icon": "💻", "title": "ECU Remap & Chip Tuning", "description": "Stok ve aftermarket ECU yazılımları. Boot modunda chip tuning dahil. XMAX, Vespa, PCX, Zontes ve daha fazlası." },
-    { "icon": "📊", "title": "Dyno Test & Analiz", "description": "Gerçek güç ölçümleri, AFR analizi, before/after karşılaştırma. Yazılım sonuçlarını dyno'da kanıtlıyoruz." },
-    { "icon": "⚙️", "title": "CVT Performans", "description": "Scooter CVT setup, variator, roller, kontra yay optimizasyonu. Maksimum hızlanma ve üst hız dengesi." },
-    { "icon": "🔧", "title": "Motor Revizyon", "description": "Komple motor sökme-takma, silindir honlama, iç parça inceleme. Motorun içinden geçip sıfır performans veriyoruz." },
-    { "icon": "🛡️", "title": "Süspansiyon & Şase", "description": "Amortisör alçaltma/revizyonu, şase analizi, sürüş setup'ı. Pist veya şehir kullanımına özel ayar." },
-    { "icon": "🔍", "title": "Arıza Teşhis & Çözüm", "description": "Üretici kaynaklı hatalı ECU kodlamaları dahil, başkalarının çözemediği arızalarda uzmanlık." }
+  "services": [
+    {
+      "id": "bakim-onarim",
+      "icon": "🔧",
+      "title": "Bakım & Onarım",
+      "subtitle": "Motosikletin sağlığı bizim işimiz, motorun ruhunu DeliEminn çözer!",
+      "description": "Motosiklet bakımı sadece yağ değişimiyle bitmez; her cıvata, her dişli, her parça kontrol ister. MotoExperTR’de bakım ve onarım işleri, bizzat DeliEminn standartlarında yapılır.",
+      "listTitle": "Neleri Kontrol Ediyoruz?",
+      "list": [
+        "Yağ ve filtre değişimi",
+        "Zincir, dişli ve aktarma sistemleri kontrolü",
+        "Fren balata, disk ve sistem kontrolü",
+        "Süspansiyon, ön takım ayarları",
+        "Elektrik tesisatı ve aydınlatmaların kontrolü",
+        "Soğutma sistemi ve sıvı eksikleri",
+        "Lastik durumu ve basınç kontrolleri",
+        "Tüm cıvata ve bağlantı noktaları sıkılık kontrolü"
+      ],
+      "closing": "Motosikletin DeliEminn elinden geçtiyse gözün arkada kalmaz!"
+    },
+    {
+      "id": "elektronik-ariza",
+      "icon": "💻",
+      "title": "Elektronik Arıza Tespiti",
+      "subtitle": "Motorun susar, gösterge söner, arıza lambası yanar… Sen anlamayabilirsin ama DeliEminn anlar!",
+      "description": "Günümüz motosikletlerinde her şey elektronik beyin (ECU) üzerinden kontrol edilir. Küçücük bir sensör arızası göstergede ışık yakar, motor performansını düşürür. İşte tam burada DeliEminn devreye girer.",
+      "listTitle": "Nasıl Yapıyoruz?",
+      "list": [
+        "Son teknoloji arıza tespit cihazlarıyla motorun beynine bağlanıyoruz",
+        "Hangi sensör, hangi devre, nerede hata veriyor anında tespit ediyoruz",
+        "Tüm sistemdeki hata kodlarını okuyoruz",
+        "Sorunu yerinde gösteriyor, sana açık açık anlatıyoruz"
+      ],
+      "closing": "DeliEminn’in tecrübesiyle bilgisayar ekranı birleşince kaçak yok, hata saklanmaz."
+    },
+    {
+      "id": "yazilim-optimize",
+      "icon": "⚙️",
+      "title": "Yazılım & Optimize",
+      "subtitle": "Fabrika sınırlarını bırak, motorun gerçek potansiyelini keşfet!",
+      "description": "Motosikletin üzerinde gelen yazılım, güvenli sürüş için sınırlı bırakılır. Ama o limitler performansı kısar, motorun tam kapasitesini saklar. İşte o sınırları DeliEminn kaldırır. Yazılım masamızda hazır kalıp yoktur; her motora, kondisyonuna ve sürücü isteğine göre en iyi ayar verilir.",
+      "listTitle": "Yazılım Sonrası Değişimler:",
+      "list": [
+        "Gaz tepkisi hızlanır ve keskinleşir",
+        "Alt ve orta devirler belirgin şekilde güçlenir",
+        "Tork artışı bizzat sürüşte hissedilir",
+        "Yakıt tüketimi dengelenir",
+        "Hız ve devir limit müdahaleleri güvenli sınırlar içinde uygulanır"
+      ],
+      "closing": "DeliEminn diyorsa, o motor yazılımdan sonra başka motor olur!"
+    },
+    {
+      "id": "performans",
+      "icon": "📊",
+      "title": "Performans Ölçümleri",
+      "subtitle": "Kaç beygir diyorsun ama elinde veri yok… Hadi bakalım, motor konuşsun, rakamlar ortaya çıksın!",
+      "description": "Motosikletin gücü, torku, beygiri lafla olmaz. Gerçek performans ölçümle ortaya çıkar. DeliEminn’in dyno test standında motorun ne yapıyor, ne yapamıyor hepsi rakam rakam önüne serilir.",
+      "listTitle": "Neler Yapıyoruz?",
+      "list": [
+        "Motorunuz dyno test cihazına özel kayışlarla bağlanır",
+        "Motor devrine göre anlık güç (HP) ve tork eğrileri ölçülür",
+        "Önce mevcut haliyle fabrika verileriyle kıyas yapılır",
+        "Tüm değerler (hızlanma, beygir, tepkime) size açıkça anlatılır",
+        "Yazılım veya modifiye sonrası gerçek değişim verilerle kanıtlanır"
+      ],
+      "closing": "DeliEminn der ki: Beygir sayısı garajda değil, dyno üstünde belli olur. Boş konuşan çok, biz kağıda dökeriz."
+    },
+    {
+      "id": "ekspertiz",
+      "icon": "🔍",
+      "title": "Motor Ekspertiz",
+      "subtitle": "Motosiklete dışarıdan bakmak kolay… Önemli olan içini, geçmişini, her vidasını okumak!",
+      "description": "İkinci el motosiklet alacaksın ya da uzun yola çıkmadan önce içinin rahat etmesi lazım. İşte o zaman motoru DeliEminn’e getirirsin. Çünkü biz motorun sadece dışını değil, geçmişini, gizli arızasını ve yorgunluğunu okuruz.",
+      "listTitle": "Expertiz'de Neler Yapıyoruz?",
+      "list": [
+        "Motor mekanik aksamlarının detaylı kontrolü",
+        "Şasi ve gövde eğrilik, kaza izi tespiti",
+        "Fren sistemi, balatalar, disk ve hidrolik kontrolü",
+        "Süspansiyon, ön takım ve amortisör kontrolü",
+        "Zincir, dişli ve aktarma sistemleri incelenmesi",
+        "ECU bağlantısı ve hata kodu taraması",
+        "Lastik, jant ve genel kondisyon analizi"
+      ],
+      "closing": "Saklanan arıza varsa DeliEminn bulur; geçmişte darbe yemişse söyleriz! Sürpriz masraflara son."
+    },
+    {
+      "id": "detailing",
+      "icon": "✨",
+      "title": "Detailing Kuaför",
+      "subtitle": "Motor sadece hızlı gitmekle olmaz… Temiz olacak, parlak olacak, gören dönecek bakacak!",
+      "description": "Motosiklet dediğin sadece performans değil, görünüş de konuşur. Tozlu, mat, yorgun gözüken motorun keyfi olmaz. İşte o yüzden DeliEminn’in elinden geçecek; tertemiz, jilet gibi çıkacak!",
+      "listTitle": "Detailing Kuaför'de Neler Yapıyoruz?",
+      "list": [
+        "Profesyonel boya yüzeyi temizliği ve parlatma",
+        "Özel ürünlerle plastik, metal ve cam aksam temizliği",
+        "Boya koruma, cila ve uzun süreli parlaklık uygulamaları",
+        "Motor bloğu ve jant detay temizliği",
+        "Sele, elcik ve diğer dokunulan yüzeylerin hijyen temizliği",
+        "Zift, reçine, sinek kalıntısı gibi zor lekelerin çıkarılması"
+      ],
+      "closing": "DeliEminn der ki: Motorun paslı, mat, kirli gezerse, o beygir gücü de konuşmaz. Önce görünüş, sonra hız."
+    }
   ],
   "youtubeChannelId": "delieminn",
   "youtubeVideos": [

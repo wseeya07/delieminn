@@ -13,7 +13,24 @@ import site from '../data/site.json';
 
     <ul class="navbar__links">
       {site.nav.map(item => (
-        <li><a href={item.href} class="navbar__link">{item.label}</a></li>
+        <li class={item.label === 'Hizmetlerimiz' ? 'has-dropdown' : ''}>
+          <a href={item.href} class="navbar__link">{item.label}</a>
+          {item.label === 'Hizmetlerimiz' && (
+            <ul class="navbar__dropdown">
+              {site.services.map(svc => (
+                <li>
+                  <a 
+                    href="/#hizmetlerimiz" 
+                    class="dropdown__link" 
+                    onclick={`setTimeout(()=>document.getElementById('tab-${svc.id}')?.click(), 10)`}
+                  >
+                    {svc.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </li>
       ))}
     </ul>
 
@@ -29,7 +46,27 @@ import site from '../data/site.json';
   <div class="navbar__overlay" id="nav-overlay">
     <ul class="navbar__overlay-links">
       {site.nav.map(item => (
-        <li><a href={item.href} class="navbar__overlay-link">{item.label}</a></li>
+        item.label === 'Hizmetlerimiz' ? (
+          <li class="overlay-dropdown-group">
+            <span class="overlay-section-title">{item.label}</span>
+            <ul class="overlay-sublinks">
+              {site.services.map(svc => (
+                <li>
+                  <a 
+                    href="/#hizmetlerimiz" 
+                    class="overlay-sublink"
+                    data-close-nav
+                    onclick={`setTimeout(()=>document.getElementById('tab-${svc.id}')?.click(), 10)`}
+                  >
+                    — {svc.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ) : (
+          <li><a href={item.href} class="navbar__overlay-link" data-close-nav>{item.label}</a></li>
+        )
       ))}
       <li>
         <a href={site.whatsapp} target="_blank" rel="noopener noreferrer" class="navbar__overlay-cta">
@@ -55,7 +92,7 @@ import site from '../data/site.json';
     document.body.style.overflow = isOpen ? 'hidden' : '';
   });
 
-  overlay?.querySelectorAll('a').forEach(a => {
+  overlay?.querySelectorAll('a[data-close-nav]').forEach(a => {
     a.addEventListener('click', () => {
       overlay?.classList.remove('open');
       toggle?.classList.remove('open');
@@ -79,25 +116,61 @@ import site from '../data/site.json';
   }
   .navbar__inner { display: flex; align-items: center; justify-content: space-between; }
 
-  .navbar__logo { display: flex; align-items: center; gap: 0.5rem; }
+  .navbar__logo { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
   .navbar__logo-img { height: 36px; width: auto; }
   .navbar__logo-text { font-family: var(--font-display); font-size: 1.5rem; display: flex; gap: 0.25rem; }
   .navbar__logo-deli { color: var(--color-accent); }
   .navbar__logo-eminn { color: var(--color-white); }
 
-  .navbar__links { display: flex; gap: var(--space-xl); }
-  .navbar__link { font-size: var(--text-small); color: var(--color-text-secondary); transition: color var(--transition-fast); font-weight: 500; }
+  .navbar__links { display: flex; gap: var(--space-xl); list-style: none; margin: 0; padding: 0; align-items: center; }
+  .navbar__link { 
+    font-size: var(--text-small); color: var(--color-text-secondary); 
+    transition: color var(--transition-fast); font-weight: 500; text-decoration: none; padding: 0.5rem 0; display: block;
+  }
   .navbar__link:hover { color: var(--color-white); }
+
+  /* Desktop Dropdown CSS */
+  .has-dropdown { position: relative; }
+  .navbar__dropdown {
+    position: absolute; top: 100%; left: -0.5rem;
+    background: var(--color-bg-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 0.5rem 0;
+    min-width: 240px;
+    opacity: 0; visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.2s ease;
+    list-style: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  }
+  .has-dropdown:hover .navbar__dropdown {
+    opacity: 1; visibility: visible; transform: translateY(0);
+  }
+  .dropdown__link {
+    display: block;
+    padding: 0.7rem 1.2rem;
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-left: 2px solid transparent;
+  }
+  .dropdown__link:hover {
+    background: rgba(230,57,70,0.1);
+    color: var(--color-white);
+    border-left: 2px solid var(--color-accent);
+  }
 
   .navbar__cta {
     background: var(--color-accent); color: var(--color-white);
-    padding: 0.5rem 1.2rem; border-radius: var(--radius-md);
+    padding: 0.5rem 1.2rem; border-radius: var(--radius-md); text-decoration: none;
     font-size: var(--text-small); font-weight: 600;
     transition: all var(--transition-base);
   }
   .navbar__cta:hover { background: var(--color-accent-hover); box-shadow: var(--glow-red); }
 
-  .navbar__hamburger { display: none; flex-direction: column; gap: 5px; padding: 4px; }
+  .navbar__hamburger { display: none; flex-direction: column; gap: 5px; padding: 4px; background: none; border: none; cursor: pointer; }
   .navbar__hamburger span { display: block; width: 24px; height: 2px; background: var(--color-white); transition: all var(--transition-base); transform-origin: center; }
   .navbar__hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
   .navbar__hamburger.open span:nth-child(2) { opacity: 0; }
@@ -113,15 +186,24 @@ import site from '../data/site.json';
   }
   .navbar__overlay.open { opacity: 1; pointer-events: auto; }
 
-  .navbar__overlay-links { display: flex; flex-direction: column; align-items: center; gap: var(--space-xl); }
-  .navbar__overlay-link { font-family: var(--font-display); font-size: 2rem; color: var(--color-white); letter-spacing: 0.05em; }
+  .navbar__overlay-links { display: flex; flex-direction: column; align-items: center; gap: var(--space-xl); list-style: none; padding:0; margin:0; }
+  .navbar__overlay-link { font-family: var(--font-display); font-size: 2rem; color: var(--color-white); letter-spacing: 0.05em; text-decoration: none; }
+  
+  /* Mobile Dropdown Sublinks */
+  .overlay-dropdown-group { text-align: center; }
+  .overlay-section-title { font-family: var(--font-display); font-size: 2rem; color: var(--color-accent); letter-spacing: 0.05em; margin-bottom: 1rem; display: block; }
+  .overlay-sublinks { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.8rem; }
+  .overlay-sublink { color: var(--color-text-secondary); font-size: 1.1rem; text-decoration: none; transition: color 0.2s;}
+  .overlay-sublink:hover { color: var(--color-white); }
+
   .navbar__overlay-cta {
     margin-top: var(--space-md); background: var(--color-accent); color: var(--color-white);
-    padding: 0.8rem 2rem; border-radius: var(--radius-md); font-weight: 600;
+    padding: 0.8rem 2rem; border-radius: var(--radius-md); font-weight: 600; text-decoration: none; display: inline-block;
   }
 
   @media (max-width: 768px) {
     .navbar__links, .navbar__cta { display: none; }
     .navbar__hamburger { display: flex; }
+    .navbar__overlay-links { padding: 2rem 0; overflow-y: auto; max-height: 100vh; justify-content: flex-start; margin-top: 4rem; }
   }
 </style>

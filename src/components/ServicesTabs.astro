@@ -1,0 +1,325 @@
+---
+import site from '../data/site.json';
+import SectionHeader from './ui/SectionHeader.astro';
+---
+<section class="section services-section" id="hizmetlerimiz">
+  <div class="container">
+    <SectionHeader label="Ne Yapıyoruz">Hizmetlerimiz</SectionHeader>
+    
+    <div class="services-container">
+      {/* SOL: SEKMELER (TABS) */}
+      <div class="services-tabs" role="tablist">
+        {site.services.map((svc, index) => (
+          <button 
+            class={`service-tab ${index === 0 ? 'active' : ''}`} 
+            role="tab" 
+            aria-selected={index === 0 ? 'true' : 'false'}
+            aria-controls={`panel-${svc.id}`}
+            id={`tab-${svc.id}`}
+            data-target={svc.id}
+          >
+            <span class="service-tab__icon">{svc.icon}</span>
+            <span class="service-tab__title">{svc.title}</span>
+          </button>
+        ))}
+      </div>
+
+      {/* SAĞ: İÇERİK PANELLERİ */}
+      <div class="services-content">
+        {site.services.map((svc, index) => (
+          <div 
+            class={`service-panel ${index === 0 ? 'active' : ''}`} 
+            role="tabpanel"
+            id={`panel-${svc.id}`}
+            aria-labelledby={`tab-${svc.id}`}
+          >
+            <h3 class="service-panel__title">{svc.title}</h3>
+            
+            {svc.subtitle && (
+              <blockquote class="service-panel__motto">
+                “{svc.subtitle}”
+              </blockquote>
+            )}
+
+            <p class="service-panel__desc">{svc.description}</p>
+            
+            {svc.list && svc.list.length > 0 && (
+              <div class="service-panel__list-container">
+                <h4 class="service-panel__list-title">{svc.listTitle}</h4>
+                <ul class="service-panel__list">
+                  {svc.list.map((item) => (
+                    <li>
+                      <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {svc.closing && (
+              <div class="service-panel__closing">
+                <p><strong>DeliEminn der ki:</strong> <br> "{svc.closing}"</p>
+              </div>
+            )}
+            
+            <a href={site.whatsapp} target="_blank" rel="noopener noreferrer" class="service-cta">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              Bilgi / Randevu Al
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function setupServicesTabs() {
+    const tabs = document.querySelectorAll('.service-tab');
+    const panels = document.querySelectorAll('.service-panel');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Remove active state from all
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+
+        // Add active state to clicked tab and corresponding panel
+        tab.classList.add('active');
+        const targetId = tab.getAttribute('data-target');
+        const targetPanel = document.getElementById(`panel-${targetId}`);
+        if(targetPanel) targetPanel.classList.add('active');
+      });
+    });
+  }
+
+  // Run on first load
+  setupServicesTabs();
+  // Support Astro View Transitions if enabled later
+  document.addEventListener('astro:page-load', setupServicesTabs);
+</script>
+
+<style>
+  .services-section {
+    position: relative;
+    background: var(--color-bg-primary);
+  }
+
+  .services-container {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  /* SOL: SEKMELER */
+  .services-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: sticky;
+    top: 100px;
+  }
+
+  .service-tab {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius-md);
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.3s ease;
+  }
+
+  .service-tab:hover {
+    background: rgba(255,255,255,0.05);
+    color: var(--color-white);
+  }
+
+  .service-tab.active {
+    background: var(--color-bg-card);
+    border-color: var(--color-accent);
+    color: var(--color-white);
+    box-shadow: 0 4px 15px rgba(230,57,70,0.15);
+  }
+
+  .service-tab__icon {
+    font-size: 1.5rem;
+  }
+
+  /* SAĞ: İÇERİK */
+  .services-content {
+    background: var(--color-bg-card);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2xl);
+    min-height: 500px;
+  }
+
+  .service-panel {
+    display: none;
+    animation: fadeIn 0.4s ease forwards;
+  }
+
+  .service-panel.active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .service-panel__title {
+    font-size: var(--text-h2);
+    font-weight: 800;
+    margin-bottom: var(--space-lg);
+    color: var(--color-white);
+  }
+
+  .service-panel__motto {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--color-accent);
+    padding-left: 1.5rem;
+    border-left: 3px solid var(--color-accent);
+    margin-bottom: var(--space-xl);
+    background: linear-gradient(90deg, rgba(230,57,70,0.05), transparent);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-right: 1rem;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  }
+
+  .service-panel__desc {
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+    font-size: 1.05rem;
+    margin-bottom: var(--space-xl);
+  }
+
+  .service-panel__list-container {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-xl);
+  }
+
+  .service-panel__list-title {
+    font-size: 1.1rem;
+    color: var(--color-white);
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+
+  .service-panel__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
+  .service-panel__list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  .check-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--color-accent);
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  .service-panel__closing {
+    margin-bottom: var(--space-xl);
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--color-text-tertiary);
+  }
+  .service-panel__closing strong {
+    color: var(--color-white);
+  }
+
+  .service-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--color-accent);
+    color: var(--color-white);
+    padding: 1rem 2rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    width: 100%;
+  }
+
+  .service-cta:hover {
+    background: var(--color-accent-hover);
+    box-shadow: var(--glow-red);
+  }
+
+  /* RESPONSIVE LİSTELER (GRID) YANYANA */
+  @media (min-width: 1024px) {
+    .service-panel__list {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .services-container {
+      grid-template-columns: 1fr;
+    }
+
+    .services-tabs {
+      flex-direction: row;
+      overflow-x: auto;
+      padding-bottom: 1rem;
+      position: relative;
+      top: 0;
+      /* Scrollbar gizleme */
+      scrollbar-width: none; 
+      -ms-overflow-style: none;
+    }
+    .services-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .service-tab {
+      flex-direction: column;
+      text-align: center;
+      min-width: 140px;
+      padding: 1rem;
+    }
+
+    .services-content {
+      padding: var(--space-xl) var(--space-lg);
+    }
+
+    .service-panel__title {
+      font-size: 1.8rem;
+    }
+
+    .service-panel__motto {
+      font-size: 1rem;
+    }
+  }
+</style>
