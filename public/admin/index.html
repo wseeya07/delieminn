@@ -1,11 +1,235 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Deli Eminn — Admin Panel</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0b; color: #fff; min-height: 100vh; }
+
+    /* LOGIN */
+    .login { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 2rem; }
+    .login__box { background: #141416; border: 1px solid #222; border-radius: 12px; padding: 2.5rem; width: 100%; max-width: 400px; }
+    .login__title { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .login__sub { color: #888; font-size: 0.9rem; margin-bottom: 2rem; }
+    .field { margin-bottom: 1.2rem; }
+    .field label { display: block; font-size: 0.8rem; color: #888; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .field input, .field select, .field textarea {
+      width: 100%; padding: 0.7rem 1rem; background: #1a1a1e; border: 1px solid #333;
+      border-radius: 8px; color: #fff; font-size: 0.95rem; outline: none; transition: border-color 0.2s;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: #e63946; }
+    .field textarea { resize: vertical; min-height: 100px; }
+    .btn {
+      width: 100%; padding: 0.8rem; background: #e63946; color: #fff; border: none;
+      border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background 0.2s;
+    }
+    .btn:hover { background: #c0313c; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .error { color: #e63946; font-size: 0.85rem; margin-top: 0.5rem; }
+    .success { color: #2ecc71; font-size: 0.85rem; margin-top: 0.5rem; }
+
+    /* DASHBOARD */
+    .dashboard { display: none; max-width: 700px; margin: 0 auto; padding: 2rem; }
+    .dashboard.active { display: block; }
+    .dash__header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #222; }
+    .dash__title { font-size: 1.3rem; }
+    .dash__logout { color: #888; font-size: 0.85rem; cursor: pointer; background: none; border: 1px solid #333; padding: 0.4rem 1rem; border-radius: 6px; }
+    .dash__logout:hover { color: #fff; border-color: #555; }
+    .form__title { font-size: 1.1rem; margin-bottom: 1.5rem; color: #e63946; }
+
+    /* PROJECT LIST */
+    .projects-list { margin-top: 2rem; border-top: 1px solid #222; padding-top: 1.5rem; }
+    .projects-list h3 { font-size: 1rem; color: #888; margin-bottom: 1rem; }
+    .project-item { background: #141416; border: 1px solid #222; border-radius: 8px; padding: 1rem; margin-bottom: 0.8rem; }
+    .project-item__title { font-weight: 600; margin-bottom: 0.3rem; }
+    .project-item__meta { font-size: 0.8rem; color: #888; }
+    .loading { text-align: center; padding: 2rem; color: #888; }
+  </style>
 </head>
 <body>
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
+  <!-- LOGIN SCREEN -->
+  <div class="login" id="loginScreen">
+    <div class="login__box">
+      <h1 class="login__title">🔧 Deli Eminn Admin</h1>
+      <p class="login__sub">Proje eklemek için giriş yap</p>
+      <div class="field">
+        <label>Kullanıcı Adı</label>
+        <input type="text" id="username" autocomplete="username" />
+      </div>
+      <div class="field">
+        <label>Şifre</label>
+        <input type="password" id="password" autocomplete="current-password" />
+      </div>
+      <button class="btn" id="loginBtn">Giriş Yap</button>
+      <div class="error" id="loginError"></div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="dashboard" id="dashboard">
+    <div class="dash__header">
+      <h1 class="dash__title">🔧 Deli Eminn Admin</h1>
+      <button class="dash__logout" id="logoutBtn">Çıkış</button>
+    </div>
+
+    <h2 class="form__title">+ Yeni Proje Ekle</h2>
+    <form id="projectForm">
+      <div class="field">
+        <label>Proje Başlığı *</label>
+        <input type="text" id="projTitle" required placeholder="Örn: XMAX 300 — 350cc TDR Kit + Dyno" />
+      </div>
+      <div class="field">
+        <label>Açıklama *</label>
+        <textarea id="projDesc" required placeholder="Kısa teknik açıklama..."></textarea>
+      </div>
+      <div class="field">
+        <label>YouTube Video Linki</label>
+        <input type="url" id="projVideo" placeholder="https://www.youtube.com/watch?v=..." />
+      </div>
+      <div class="field">
+        <label>Kategori</label>
+        <select id="projCategory">
+          <option value="ECU Remap">ECU Remap</option>
+          <option value="Dyno Test">Dyno Test</option>
+          <option value="CVT">CVT</option>
+          <option value="Motor Revizyon">Motor Revizyon</option>
+          <option value="Modifiye" selected>Modifiye</option>
+          <option value="Bakım">Bakım</option>
+          <option value="Arıza Çözüm">Arıza Çözüm</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Marka / Model</label>
+        <input type="text" id="projBrand" placeholder="Örn: Yamaha XMAX 300" />
+      </div>
+      <button class="btn" type="submit" id="submitBtn">Projeyi Yayınla</button>
+      <div class="error" id="formError"></div>
+      <div class="success" id="formSuccess"></div>
+    </form>
+
+    <div class="projects-list" id="projectsList">
+      <h3>Mevcut Projeler</h3>
+      <div id="existingProjects"><div class="loading">Yükleniyor...</div></div>
+    </div>
+  </div>
+
+  <script>
+    const API = '/api';
+
+    // LOGIN
+    document.getElementById('loginBtn').addEventListener('click', async () => {
+      const user = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
+      const err = document.getElementById('loginError');
+      err.textContent = '';
+
+      const res = await fetch(`${API}/auth`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: user, password: pass })
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        sessionStorage.setItem('token', data.token);
+        showDashboard();
+      } else {
+        err.textContent = 'Kullanıcı adı veya şifre hatalı.';
+      }
+    });
+
+    // Handle Enter key on login
+    document.getElementById('password').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') document.getElementById('loginBtn').click();
+    });
+
+    // LOGOUT
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      sessionStorage.removeItem('token');
+      document.getElementById('loginScreen').style.display = 'flex';
+      document.getElementById('dashboard').classList.remove('active');
+    });
+
+    // SHOW DASHBOARD
+    function showDashboard() {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('dashboard').classList.add('active');
+      loadProjects();
+    }
+
+    // LOAD EXISTING PROJECTS
+    async function loadProjects() {
+      const container = document.getElementById('existingProjects');
+      try {
+        const res = await fetch(`${API}/projects`, {
+          headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` }
+        });
+        if (!res.ok) throw new Error();
+        const projects = await res.json();
+
+        if (projects.length === 0) {
+          container.innerHTML = '<p style="color:#888">Henüz proje yok.</p>';
+          return;
+        }
+
+        container.innerHTML = projects.map(p => `
+          <div class="project-item">
+            <div class="project-item__title">${p.title}</div>
+            <div class="project-item__meta">${p.category || ''} ${p.brand ? '· ' + p.brand : ''}</div>
+          </div>
+        `).join('');
+      } catch {
+        container.innerHTML = '<p style="color:#888">Projeler yüklenemedi.</p>';
+      }
+    }
+
+    // SUBMIT PROJECT
+    document.getElementById('projectForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      const err = document.getElementById('formError');
+      const suc = document.getElementById('formSuccess');
+      err.textContent = ''; suc.textContent = '';
+      btn.disabled = true; btn.textContent = 'Yayınlanıyor...';
+
+      const data = {
+        title: document.getElementById('projTitle').value,
+        description: document.getElementById('projDesc').value,
+        videoUrl: document.getElementById('projVideo').value || '',
+        category: document.getElementById('projCategory').value,
+        brand: document.getElementById('projBrand').value || ''
+      };
+
+      try {
+        const res = await fetch(`${API}/projects`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+          },
+          body: JSON.stringify(data)
+        });
+
+        if (!res.ok) {
+          const r = await res.json();
+          throw new Error(r.error || 'Hata oluştu');
+        }
+
+        suc.textContent = '✅ Proje yayınlandı! Site 1-2 dakika içinde güncellenecek.';
+        document.getElementById('projectForm').reset();
+        loadProjects();
+      } catch (error) {
+        err.textContent = error.message;
+      } finally {
+        btn.disabled = false; btn.textContent = 'Projeyi Yayınla';
+      }
+    });
+
+    // AUTO-LOGIN CHECK
+    if (sessionStorage.getItem('token')) showDashboard();
+  </script>
 </body>
 </html>
