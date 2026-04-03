@@ -2,7 +2,7 @@ local_backend: true
 
 backend:
   name: github
-  repo: batuhanuzun/delieminn
+  repo: wseeya07/delieminn
   branch: main
 
 media_folder: "public/images/uploads"
