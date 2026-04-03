@@ -19,11 +19,7 @@ import site from '../data/site.json';
             <ul class="navbar__dropdown">
               {site.services.map(svc => (
                 <li>
-                  <a 
-                    href="/#hizmetlerimiz" 
-                    class="dropdown__link" 
-                    onclick={`setTimeout(()=>document.getElementById('tab-${svc.id}')?.click(), 10)`}
-                  >
+                  <a href={`/hizmetlerimiz/${svc.id}`} class="dropdown__link">
                     {svc.title}
                   </a>
                 </li>
@@ -52,12 +48,7 @@ import site from '../data/site.json';
             <ul class="overlay-sublinks">
               {site.services.map(svc => (
                 <li>
-                  <a 
-                    href="/#hizmetlerimiz" 
-                    class="overlay-sublink"
-                    data-close-nav
-                    onclick={`setTimeout(()=>document.getElementById('tab-${svc.id}')?.click(), 10)`}
-                  >
+                  <a href={`/hizmetlerimiz/${svc.id}`} class="overlay-sublink" data-close-nav>
                     — {svc.title}
                   </a>
                 </li>

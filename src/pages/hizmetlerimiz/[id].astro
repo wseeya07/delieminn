@@ -1,0 +1,295 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import site from '../../data/site.json';
+
+export async function getStaticPaths() {
+  return site.services.map((svc) => {
+    return {
+      params: { id: svc.id },
+      props: { svc },
+    };
+  });
+}
+
+const { svc } = Astro.props;
+---
+<BaseLayout title={`${svc.title} - Deli Eminn MotoExperTR`}>
+  <Navbar />
+  
+  <main class="service-page">
+    <header class="service-hero reveal">
+      <div class="service-hero__glow"></div>
+      <div class="container service-hero__content">
+        <span class="service-hero__icon">{svc.icon}</span>
+        <h1 class="service-hero__title">{svc.title}</h1>
+      </div>
+    </header>
+
+    <article class="service-content container">
+      {svc.subtitle && (
+        <blockquote class="service-quote reveal-stagger">
+          “{svc.subtitle}”
+        </blockquote>
+      )}
+
+      <div class="service-description reveal-stagger">
+        <p>{svc.description}</p>
+      </div>
+
+      {svc.list && svc.list.length > 0 && (
+        <section class="service-features reveal-stagger">
+          <h2 class="service-features__title">{svc.listTitle}</h2>
+          <ul class="service-features__list">
+            {svc.list.map((item) => (
+              <li>
+                <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {svc.closing && (
+        <div class="service-closing reveal">
+          <p class="service-closing__author">DeliEminn der ki:</p>
+          <p class="service-closing__text">"{svc.closing}"</p>
+        </div>
+      )}
+
+      <div class="service-actions reveal">
+        <a href={site.whatsapp} target="_blank" rel="noopener noreferrer" class="cta-primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          Hızlı Randevu Al
+        </a>
+        <a href="/#hizmetlerimiz" class="cta-secondary">
+          Diğer Hizmetler
+        </a>
+      </div>
+    </article>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .service-page {
+    padding-top: 80px; /* Navbar boslugu */
+    background: var(--color-bg-primary);
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .service-hero {
+    position: relative;
+    padding: 100px 0 60px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    overflow: hidden;
+  }
+
+  .service-hero__glow {
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 100%;
+    background: radial-gradient(circle, var(--color-accent) 0%, transparent 60%);
+    opacity: 0.1;
+    filter: blur(80px);
+    z-index: 0;
+  }
+
+  .service-hero__content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .service-hero__icon {
+    display: inline-block;
+    font-size: 3rem;
+    background: rgba(255,255,255,0.03);
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-lg);
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .service-hero__title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--color-white);
+  }
+
+  /* CONTENT AREA */
+  .service-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--space-3xl) var(--space-md);
+  }
+
+  /* QUOTE */
+  .service-quote {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 3vw, 1.8rem);
+    font-style: italic;
+    color: var(--color-accent);
+    text-align: center;
+    line-height: 1.4;
+    margin-bottom: var(--space-2xl);
+    padding: 0 var(--space-lg);
+  }
+
+  /* PARAGRAPH */
+  .service-description {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-2xl);
+    text-align: justify;
+  }
+  
+  .service-description p {
+    margin-bottom: 1rem;
+  }
+
+  /* FEATURES LIST */
+  .service-features {
+    background: var(--color-bg-card);
+    border: var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2xl);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .service-features__title {
+    font-size: var(--text-h3);
+    color: var(--color-white);
+    margin-bottom: var(--space-xl);
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .service-features__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .service-features__list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+  }
+
+  .check-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--color-accent);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* CLOSING RACON */
+  .service-closing {
+    text-align: center;
+    background: linear-gradient(180deg, transparent, rgba(230,57,70,0.05));
+    border-top: 2px solid var(--color-accent);
+    padding: var(--space-xl);
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    margin-bottom: var(--space-3xl);
+  }
+
+  .service-closing__author {
+    color: var(--color-text-tertiary);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .service-closing__text {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--color-white);
+    line-height: 1.5;
+  }
+
+  /* ACTIONS */
+  .service-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .cta-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-accent);
+    color: var(--color-white);
+    padding: 1rem 2rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .cta-primary:hover {
+    background: var(--color-accent-hover);
+    box-shadow: 0 0 20px rgba(230,57,70,0.4);
+    transform: translateY(-2px);
+  }
+
+  .cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255,255,255,0.05);
+    color: var(--color-white);
+    padding: 1rem 2rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.3s ease;
+  }
+
+  .cta-secondary:hover {
+    background: rgba(255,255,255,0.1);
+    transform: translateY(-2px);
+  }
+
+  @media (min-width: 768px) {
+    .service-features__list {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .service-actions {
+      flex-direction: column;
+    }
+    .service-quote {
+      font-size: 1.2rem;
+      padding: 0;
+    }
+    .service-features__list li {
+      font-size: 1rem;
+    }
+  }
+</style>
