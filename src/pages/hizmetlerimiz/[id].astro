@@ -72,7 +72,6 @@ const { svc } = Astro.props;
           <div class="service-action-box">
             {svc.closing && (
               <div class="service-closing">
-                <p class="service-closing__author">DeliEminn der ki:</p>
                 <p class="service-closing__text">"{svc.closing}"</p>
               </div>
             )}
@@ -283,15 +282,6 @@ const { svc } = Astro.props;
 
   .service-closing {
     margin-bottom: var(--space-xl);
-  }
-
-  .service-closing__author {
-    color: var(--color-text-tertiary);
-    font-family: var(--font-mono);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-size: 0.85rem;
-    margin-bottom: 0.5rem;
   }
 
   .service-closing__text {
