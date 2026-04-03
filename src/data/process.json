@@ -1,22 +1,22 @@
 [
   {
     "step": 1,
-    "title": "İletişim & Randevu",
-    "description": "WhatsApp veya telefonla ulaşın. Aracınızı, ihtiyacınızı dinleyelim, uygun randevuyu ayarlayalım."
+    "title": "Üretici Ön Analizi",
+    "description": "Önce üretici beyni detaylıca okunur ve fabrikanın amacı belirlenir. Bu stok yazılımın araç üzerindeki olumlu ve olumsuz etkileri şeffafça tespit edilerek sizinle paylaşılır."
   },
   {
     "step": 2,
-    "title": "Teşhis & Analiz",
-    "description": "Aracınızı dyno'ya alıyoruz. Mevcut güç, tork, AFR değerlerini ölçüp durumu analiz ediyoruz."
+    "title": "Beklenti ve Dyno Ölçümü",
+    "description": "Karar aracın amacı ve sizin isteğinize göre şekillenir. İşlemden önce dyno üzerinde stok güç ve Afr (hava/yakıt) değerleri ölçülür, detaylı loglara bakılır ve kayıt altına alınır."
   },
   {
     "step": 3,
-    "title": "Uygulama",
-    "description": "Yazılım, modifikasyon veya revizyon — onayladığınız planı hassasiyetle uyguluyoruz."
+    "title": "Kişiye Özel Kalibrasyon",
+    "description": "Aracın mekanik sınırları belirlenir. Sizin kullanacağınız yakıt kalitesi, yaşadığınız iklim ve coğrafya baz alınarak, en optimum ve güvenli sınırlar içerisinde ECU kalibre edilir."
   },
   {
     "step": 4,
-    "title": "Test & Teslim",
-    "description": "İşlem sonrası dyno'da tekrar test ediyoruz. Before/after verilerle sonucu kanıtlayıp teslim ediyoruz."
+    "title": "Kusursuz Sonuç",
+    "description": "İşlem sonrası arıza kaydı veya uyumsuzluk yaşanmaz. Dosyanız yedeklemeli serverlarımızda şifreli muhafaza edilir. Dilediğiniz zaman ücretsiz şekilde orijinale dönebilir veya revize isteyebilirsiniz."
   }
 ]
