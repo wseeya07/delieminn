@@ -56,6 +56,7 @@
   "services": [
     {
       "id": "bakim-onarim",
+      "image": "/images/services/bakim_1.jpg",
       "icon": "🔧",
       "title": "Bakım & Onarım",
       "subtitle": "Motosikletin sağlığı bizim işimiz, motorun ruhunu DeliEminn çözer!",
@@ -75,6 +76,7 @@
     },
     {
       "id": "elektronik-ariza",
+      "image": "/images/services/ecu.jpg",
       "icon": "💻",
       "title": "Elektronik Arıza Tespiti",
       "subtitle": "Motorun susar, gösterge söner, arıza lambası yanar… Sen anlamayabilirsin ama DeliEminn anlar!",
@@ -90,6 +92,7 @@
     },
     {
       "id": "yazilim-optimize",
+      "image": "/images/services/ecu.jpg",
       "icon": "⚙️",
       "title": "Yazılım & Optimize",
       "subtitle": "Fabrika sınırlarını bırak, motorun gerçek potansiyelini keşfet!",
@@ -106,6 +109,7 @@
     },
     {
       "id": "performans",
+      "image": "/images/services/dyno_1.jpg",
       "icon": "📊",
       "title": "Performans Ölçümleri",
       "subtitle": "Kaç beygir diyorsun ama elinde veri yok… Hadi bakalım, motor konuşsun, rakamlar ortaya çıksın!",
@@ -122,6 +126,7 @@
     },
     {
       "id": "ekspertiz",
+      "image": "/images/services/expertiz.jpg",
       "icon": "🔍",
       "title": "Motor Ekspertiz",
       "subtitle": "Motosiklete dışarıdan bakmak kolay… Önemli olan içini, geçmişini, her vidasını okumak!",
@@ -140,6 +145,7 @@
     },
     {
       "id": "detailing",
+      "image": "/images/services/detail.jpg",
       "icon": "✨",
       "title": "Detailing Kuaför",
       "subtitle": "Motor sadece hızlı gitmekle olmaz… Temiz olacak, parlak olacak, gören dönecek bakacak!",
